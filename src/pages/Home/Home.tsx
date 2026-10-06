@@ -275,16 +275,7 @@ const Home: React.FC = () => {
     }, '*');
   };
 
-  window.addEventListener('message', (event) => {
-    if (event.data.type === 'resizeChart') {
-      const { width, height } = event.data;
-      const chart = document.getElementById('chart');
-      if (chart) {
-        chart.style.width = `${width}px`;
-        chart.style.height = `${height}px`;
-      }
-    }
-  });
+
 
   return (
     <div className='wrapper'>
@@ -310,16 +301,7 @@ const Home: React.FC = () => {
                 您還未新增任何圖表，請點設定儀表板以新增圖表。
               </div>
             ) : (
-            <ResponsiveGridLayout
-              layouts={{ lg: layout, md: layout, sm: layout, xs: layout, xxs: layout }}
-              breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-              cols={{ lg: 12, md: 12, sm: 8, xs: 6, xxs: 2 }}
-              rowHeight={150}
-              onLayoutChange={handleLayoutChange}
-              onResizeStop={handleResizeStop}
-              isDraggable={false}
-              isResizable={true}
-            >
+            <div className={styles.demoGrid}>
               {charts.map(chart => (
                 <div key={`chart-${chart.id}`} className={styles.dataCard} data-grid={{ i: `chart-${chart.id}`, ...layout.find(l => l.i === `chart-${chart.id}`) }}>
                   {/* {chart.id === 13 && <SubcontractingRefundRateChart chartId={chart.id} />}
@@ -351,7 +333,7 @@ const Home: React.FC = () => {
                   </ChartWithDropdown>
                 </div>
               ))}
-            </ResponsiveGridLayout>
+            </div>
             )}
             <div className={styles.syncTime}>
               {syncTime ? `最後同步時間: ${new Date(syncTime).toLocaleString()}` : 'Fetching sync time...'}

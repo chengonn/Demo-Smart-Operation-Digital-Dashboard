@@ -26,7 +26,7 @@ function seed(): Store {
     groupCharts: charts.map((chart, i) => ({ groupId: i % 2 + 1, chartId: chart.id, chartGroupId: i + 1 })),
     applications: [0, 1, 2, 3].map((applyStatus, i) => ({ id: i + 1, chartId: i + 10, chartName: names[i], applicant: '陳怡安', guarantor: '展示管理員', startDate: '2026-10-01 09:00:00', endDate: '2026-12-31 18:00:00', content: '申請季度營運分析所需的 KPI', reason: '追蹤營運改善成效', applyStatus, groupId: 1, ...audit })),
     tasks: charts.map(chart => ({ id: chart.id, chartId: chart.id, name: chart.name, defaultProcessor: '2', defaultAuditor: '1', upperLimit: 100, lowerLimit: 80, ...audit })),
-    mails: [0, 1, 2, 3].map((status, i) => ({ id: i + 1, assignedTaskId: i + 10, chartId: i + 10, name: ['追蹤本月產量達成率', '工時效率改善計畫', '退貨原因檢討', '品質改善成果確認'][i], status: mailStatuses[status], publisher: '展示管理員', receiver: '陳怡安', emailSendTime: stamp, ...audit, firstMessage: { content: '請確認本月指標，整理改善方向並回覆。此為展示訊息。' }, messageList: [{ id: 1, messageId: 1, mailId: i + 1, content: '請確認本月指標，整理改善方向並回覆。此為展示訊息。', ...audit }] })),
+    mails: [0, 1, 2, 3].map((status, i) => ({ id: i + 1, assignedTaskId: i + 10, chartId: i + 10, name: ['追蹤本月產量達成率', '工時效率改善計畫', '退貨原因檢討', '品質改善成果確認'][i], status: mailStatuses[status], publisher: '展示管理員', receiver: '陳怡安', emailSendTime: stamp, showcaseImage: charts[i].showcaseImage, ...audit, firstMessage: { content: '請確認本月指標，整理改善方向並回覆。此為展示訊息。' }, messageList: [{ id: 1, messageId: 1, mailId: i + 1, content: '請確認本月指標，整理改善方向並回覆。此為展示訊息。', ...audit }] })),
     permissions: {}, conversations: {},
   };
 }
@@ -114,7 +114,7 @@ export function demoRequest(rawURL: string, method = 'GET', body: any = {}, extr
     else { const row = find(store.applications, id); if (verb === 'DELETE') store.applications = store.applications.filter(app => app !== row); else if (row) Object.assign(row, data, path.includes('/close/') ? { applyStatus: 0 } : {}); result = ok(row); }
   } else if (path === '/assigned-task/sponsor' || path === '/export') {
     const key = String(params.chartId);
-    if (mutate) store.permissions[key] = { ...store.permissions[key], ...data };
+    if (mutate) { const field = path === '/export' ? 'exporterList' : 'sponsorList'; store.permissions[key] = { ...store.permissions[key], [field]: data[field] || [] }; }
     result = ok({ sponsorList: ['1', '2'], exporterList: ['1', '2'], ...store.permissions[key] });
   } else if (path.startsWith('/assigned-task')) {
     if (verb === 'GET') result = ok(store.tasks.filter(row => !params.chartId || row.chartId === Number(params.chartId)));
@@ -132,7 +132,7 @@ export function demoRequest(rawURL: string, method = 'GET', body: any = {}, extr
     const mail = find(store.mails, id); if (mail) mail.status = mailStatuses[Number(params.status)]; result = ok(mail);
   } else if (path === '/mail' || /^\/mail\/\d+$/.test(path)) {
     if (verb === 'GET') result = ok(path === '/mail' ? store.mails.filter(row => !params.status || String(params.status).split(',').map(code => mailStatuses[Number(code)]).includes(row.status)) : find(store.mails, id));
-    else if (verb === 'POST') { const mailId = nextId(store.mails); const row = { ...audit, ...data, id: mailId, status: '交辦', publisher: '展示管理員', receiver: find(store.users, data.receiver)?.name || data.receiver, emailSendTime: stamp, messageList: [] }; store.mails.push(row); result = ok(row); }
+    else if (verb === 'POST') { const mailId = nextId(store.mails); const row = { ...audit, ...data, id: mailId, status: '交辦', publisher: '展示管理員', receiver: find(store.users, data.receiver)?.name || data.receiver, emailSendTime: stamp, showcaseImage: find(store.charts, data.chartId)?.showcaseImage, messageList: [] }; store.mails.push(row); result = ok(row); }
     else { const row = find(store.mails, id); if (row) Object.assign(row, data); if (verb === 'DELETE') store.mails = store.mails.filter(mail => mail !== row); result = ok(row); }
   } else if (path.startsWith('/ai')) {
     const key = String(params.chartId || data.chartId);

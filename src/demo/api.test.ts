@@ -65,7 +65,10 @@ test('mail creation, reply, completion and deletion work without sending real ma
 
 test('permissions, alert limits and application closure persist', () => {
   request('/export', 'POST', { exporterList: ['3'] }, { chartId: 10 });
+  request('/assigned-task/sponsor', 'POST', { sponsorList: ['2'], exporterList: [] }, { chartId: 10 });
   expect(request('/export', 'GET', {}, { chartId: 10 }).data.exporterList).toEqual(['3']);
+  request('/export', 'POST', { exporterList: ['4'], sponsorList: [] }, { chartId: 10 });
+  expect(request('/assigned-task/sponsor', 'GET', {}, { chartId: 10 }).data.sponsorList).toEqual(['2']);
   request('/assigned-task/10', 'PATCH', { lowerLimit: 75 });
   expect(request('/assigned-task', 'GET', {}, { chartId: 10 }).data[0].lowerLimit).toBe(75);
   request('/application/close/4', 'PATCH');

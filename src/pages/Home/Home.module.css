@@ -204,3 +204,9 @@
   padding: 20px; 
   border-radius: 10px;    
 }
+
+.demoGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; padding: 20px; }
+.demoGrid .dataCard { height: 320px; margin: 0; min-width: 0; }
+.demoGrid .chartIframe { width: 100%; height: 100%; }
+@media (max-width: 1200px) { .demoGrid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 600px) { .demoGrid { padding: 12px; gap: 12px; } }

@@ -142,7 +142,7 @@ const NavBar: React.FC = () => {
 
               {/* 權限管理 */}
               {/* {['ADMIN', 'USER'].includes(user?.role ?? '') && ( */}
-              {user?.identity === 'ADMIN' && (
+              {['ADMIN', 'DEVELOPER'].includes(user?.identity || '') && (
                 <li className={`nav-item ${styles.navbarNavItem}`}>
                   <Link
                     className={`nav-link ${styles.navLink} ${activeLink.startsWith('/AssignExportControl') ? styles.activeNavLink : ''}`}
@@ -157,7 +157,7 @@ const NavBar: React.FC = () => {
               )}
 
               {/* 使用者管理 */}
-              {user?.identity === 'ADMIN' && (
+              {['ADMIN', 'DEVELOPER'].includes(user?.identity || '') && (
                 <li className={`nav-item ${styles.navbarNavItem}`}>
                   <Link
                     className={`nav-link ${styles.navLink} ${activeLink.startsWith('/UserControl') ? styles.activeNavLink : ''}`}
@@ -172,7 +172,7 @@ const NavBar: React.FC = () => {
               )}
 
               {/* ＫＰＩ審核 */}
-              {user?.identity === 'ADMIN' && (
+              {['ADMIN', 'DEVELOPER'].includes(user?.identity || '') && (
                 <li className={`nav-item ${styles.navbarNavItem}`}>
                   <Link
                     className={`nav-link ${styles.navLink} ${activeLink.startsWith('/InterimKPIControl') ? styles.activeNavLink : ''}`}
@@ -187,7 +187,7 @@ const NavBar: React.FC = () => {
               )}
 
               {/* 群組管理 */}
-              {user?.identity === 'ADMIN' && (
+              {['ADMIN', 'DEVELOPER'].includes(user?.identity || '') && (
                 <li className={`nav-item ${styles.navbarNavItem}`}>
                   <Link
                     className={`nav-link ${styles.navLink} ${activeLink.startsWith('/GroupManagement') ? styles.activeNavLink : ''}`}
