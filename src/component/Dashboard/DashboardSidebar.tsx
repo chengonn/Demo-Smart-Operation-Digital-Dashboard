@@ -53,6 +53,7 @@ const DashboardSidebar: React.FC<{
       try {
         const response = await DashboardService.getAllDashboards();
         setDashboards(response);
+        if (response.length) { setActiveDashboard(String(response[0].id)); onSelectDashboard(String(response[0].id)); }
       } catch (error) {
         console.error('Failed to fetch dashboards:', error);
       }

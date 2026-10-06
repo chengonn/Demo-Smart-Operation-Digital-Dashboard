@@ -1,3 +1,4 @@
+import DemoBanner from './demo/DemoBanner';
 // src/index.tsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -15,7 +16,7 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <UserProvider>
     <ChartProvider>
-      <Router>
+      <Router><DemoBanner />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/profile-setup" element={<ProfileSetup />} />

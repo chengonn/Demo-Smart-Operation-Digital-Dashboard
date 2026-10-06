@@ -93,7 +93,7 @@ const UserPickerDialog: React.FC<{
       getAssignedTaskSponsors(chartId)
         .then((response) => {
           if (response && response.data) {
-            const sponsorList = response.data.map((sponsor: any) => sponsor.sponsorId);
+            const sponsorList = response.data.sponsorList;
             const selectedUsers = users.filter((user) =>
               sponsorList.includes(user.userId)
             );
@@ -218,11 +218,9 @@ const AssignTaskControl: React.FC = () => {
             try {
               const sponsorResponse = await getAssignedTaskSponsors(chart.id);
               if (sponsorResponse && sponsorResponse.data) {
-                const sponsorList = sponsorResponse.data.map((sponsor: any) => sponsor.sponsorId);
-                const assignedUsers = sponsorList.map((userId: string) => ({
-                  userId,
-                  userName: sponsorResponse.data?.find((sponsor: any) => sponsor.sponsorId === userId)?.sponsorName || 'Unknown',
-                }));
+                const sponsorList = sponsorResponse.data.sponsorList;
+                const allDemoUsers = await fetchAllUsers();
+                const assignedUsers = allDemoUsers.filter(user => sponsorList.includes(user.userId));
                 usersMap[chart.id] = assignedUsers;
               }
             } catch (error) {
@@ -265,7 +263,7 @@ const AssignTaskControl: React.FC = () => {
         getAllAssignedTasks(currentChart).then((response) => {
           console.log('Assigned tasks response:', response.data);
 
-          const taskData = response.data as unknown as AssignedTaskResponse;
+          const taskData = response.data?.[0] as unknown as AssignedTaskResponse;
 
           if (taskData) {
             setUpperLimit(taskData.upperLimit);

@@ -73,7 +73,7 @@ const ChartService = {
     }
   },  
 
-  getCharts: async (available: boolean) => {
+  getCharts: async (available?: boolean) => {
     try {
       const response = await axiosInstance.get('/chart', {
         params: { available }

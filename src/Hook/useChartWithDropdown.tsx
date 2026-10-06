@@ -105,7 +105,7 @@ export function useChartWithDropdown(
       try {
         const response = await ChartService.getChartData(id);
         if (response.data) {
-          setChartHTML(response.data);
+          setChartHTML(response.data.chartHTML);
         } else {
           console.error('Failed to fetch chart HTML:', response.message);
         }
@@ -275,7 +275,7 @@ export function useChartWithDropdown(
         setInteractiveCharts(chartsWithData);
 
         // 確保使用 ChartWithDropdown 中的正確 chartId
-        const url = `/#/advanced-analysis?dashboardId=${dashboardId}&chartId=${chartId}`;
+        const url = `${window.location.pathname}#/advanced-analysis?dashboardId=${dashboardId}&chartId=${chartId}`;
         window.open(url, '_blank');
         console.log('Navigating to:', url); 
       } else {

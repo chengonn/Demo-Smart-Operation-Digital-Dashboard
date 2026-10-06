@@ -16,7 +16,7 @@ const AdvancedSmartAnalysis: React.FC = () => {
   const [aiSuggestion, setAiSuggestion] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [aiAnalysisId, setAiAnalysisId] = useState<number | null>(null);
-  const [aiAnalysisData, setAiAnalysisData] = useState<any[]>([]); 
+  const [aiAnalysisData, setAiAnalysisData] = useState<any[]>([]);
 
   useEffect(() => {
     if (chartId) {
@@ -108,6 +108,7 @@ const AdvancedSmartAnalysis: React.FC = () => {
         <>
           {!showDialogue ? (
             <SmartHTML chartHTML={chartHTML} />
+            // <SmartHTML chartId={Number(chartId)} />
           ) : (
             chartId && <SmartDialogue aiAnalysisData={aiAnalysisData} chartId={Number(chartId)} isLoading={isLoading}  aiAnalysisId={aiAnalysisId} />
           )}
@@ -128,6 +129,7 @@ const AdvancedSmartAnalysis: React.FC = () => {
       ) : (
         <>
           <SmartHTML chartHTML={chartHTML} />
+          {/* <SmartHTML chartId={Number(chartId)} /> */}
           {chartId && <SmartDialogue aiAnalysisData={aiAnalysisData} chartId={Number(chartId)} isLoading={isLoading}  aiAnalysisId={aiAnalysisId} />}
         </>
       )}

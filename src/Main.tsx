@@ -1,6 +1,6 @@
 //src\Main.tsx
-import React, { useEffect, useState  } from 'react';
-import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Pdata from './pages/Pdata/PersonalData';
 import Mail from './pages/Mail/Mail';
@@ -19,52 +19,7 @@ import NotFound from './pages/NotFound/NotFound';
 
 const Main: React.FC = () => {
   const { isAuthenticated } = useUserContext();
-  const [showGroupManagement, setShowGroupManagement] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (location.pathname === '/profile-setup' || location.pathname === '/awaiting-approval') {
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('user');
-      navigate('/login');
-    } else {
-      // 保存完整路径，包括查询参数
-      localStorage.setItem('lastVisitedPath', location.pathname + location.search);
-    }
-  }, [location, navigate]);
-  
-  useEffect(() => {
-    const savedPath = localStorage.getItem('lastVisitedPath');
-    if (savedPath) {
-      navigate(savedPath);
-    }
-  }, [navigate]);
-
-  useEffect(() => {
-    const savedPath = localStorage.getItem('lastVisitedPath');
-    
-    if (savedPath) {
-      // If the saved path is GroupManagement, navigate to GroupList as before
-      if (savedPath.includes('GroupManagement')) {
-        navigate('/GroupManagement/GroupList');
-      }
-      // If the saved path is AssignExportControl, navigate to AssignExportControl/assign by default
-      else if (savedPath === '/AssignExportControl' || savedPath === '/AssignExportControl/') {
-        navigate('/AssignExportControl/assign');
-      }
-      else {
-        navigate(savedPath);
-      }
-    }
-  }, [navigate]);
-
-  const identityMapping: { [key: string]: string } = {
-    '無權限': 'NO_PERMISSION',
-    '職員': 'USER',
-    '管理員': 'ADMIN',
-    '開發者': 'DEVELOPER'
-  };
 
   return (
     <div className="App">

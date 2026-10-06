@@ -93,7 +93,7 @@ const ChartAdminTable: React.FC = () => {
   };
 
   const fetchCharts = async (available: boolean | null) => {
-    const actualAvailable = available !== null ? available : true;
+    const actualAvailable = selectedStatus === '全部' ? undefined : available ?? true;
     try {
       const response = await ChartService.getCharts(actualAvailable);
       const chartsData = response.data;

@@ -1,7 +1,8 @@
+import { demoUser } from '../demo/api';
 //src\context\UserContext.tsx
-import React, { createContext, useReducer, ReactNode, useContext, useEffect, useState } from 'react';
-import { fetchWithAuth } from '../utils/fetchWithAuth';
-import { backendApiUrl } from '../services/LoginApi';
+import React, { createContext, useReducer, ReactNode, useContext, useState } from 'react';
+
+
 import { UpdateUserData } from '../services/types/userManagement';
 
 interface User {
@@ -56,7 +57,7 @@ const initialState: State = {
   },
   loading: false,
   editable: false,
-  isAuthenticated: false
+  isAuthenticated: true
 };
 
 const userReducer = (state: State, action: Action): State => {
@@ -91,42 +92,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(userReducer, initialState);
-  const [user, setUserState] = useState<User | null>(null);
-
-  useEffect(() => {
-    // 从 localStorage 恢复用户数据和 token
-    const savedUser = localStorage.getItem('user');
-    const authToken = localStorage.getItem('authToken');
-
-    if (authToken) {
-      dispatch({ type: 'SET_AUTHENTICATED', payload: true });
-
-      if (savedUser) {
-        setUserState(JSON.parse(savedUser));
-        dispatch({ type: 'SET_USER', payload: JSON.parse(savedUser) });
-      } else {
-        // 如果未找到保存的用户，获取用户信息
-        fetchWithAuth(`${backendApiUrl}/user-account`)
-          .then((data) => {
-            const userForContext: User = data.data;
-            setUserState(userForContext);
-            dispatch({ type: 'SET_USER', payload: userForContext });
-            localStorage.setItem('user', JSON.stringify(userForContext)); // 保存用户数据
-          })
-          .catch(() => {
-            dispatch({ type: 'SET_AUTHENTICATED', payload: false });
-            localStorage.removeItem('authToken'); // 在错误时清除 token
-          });
-      }
-    } else {
-      dispatch({ type: 'SET_AUTHENTICATED', payload: false });
-    }
-
-    // 清除 token 的 cleanup function
-    return () => {
-      localStorage.removeItem('authToken'); // 在组件卸载时清除 token
-    };
-  }, []);
+  const [user, setUserState] = useState<User | null>(demoUser);
 
   const setUser = (userData: any) => {
     if (userData) {

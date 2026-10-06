@@ -3,6 +3,14 @@ import { Responsive, WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import LineChart from '../../component/Chart/LineChart';
+import SubcontractingRefundRateChart from '../../component/Chart/subcontracting_refund_rate';
+import TimeEfficiencyChart from '../../component/Chart/time_efficiency'
+import PurchaseUnitPriceChart from '../../component/Chart/purchase_unit_price'
+import YieldAchievementRateChart from '../../component/Chart/yield_achievement_rate'
+import RefundRateChart from '../../component/Chart/refund_rate';
+import TurnoverRateChart from '../../component/Chart/turnover_rate';
+import CostVarianceChart from '../../component/Chart/cost_variance_rate';
+import InventoryLevelsChart from '../../component/Chart/Inventory_levels';
 import DashboardSidebar from '../../component/Dashboard/DashboardSidebar';
 import { saveAs } from 'file-saver';
 import { exportData, getExportPermission, setExportPermission } from '../../services/exportService';
@@ -138,8 +146,8 @@ const Home: React.FC = () => {
         return { result: false, errorCode: exportResponse.errorCode, data: new Blob() };
       }
   
-      const blob = new Blob([exportResponse.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      saveAs(blob, `exported_data_${chartId}.xlsx`);
+      const blob = new Blob([exportResponse.data], { type: 'text/csv;charset=utf-8' });
+      saveAs(blob, `demo_data_${chartId}.csv`);
   
       alert('數據匯出成功！');
       return { result: true, errorCode: '', data: blob };
@@ -306,6 +314,7 @@ const Home: React.FC = () => {
               layouts={{ lg: layout, md: layout, sm: layout, xs: layout, xxs: layout }}
               breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
               cols={{ lg: 12, md: 12, sm: 8, xs: 6, xxs: 2 }}
+              rowHeight={150}
               onLayoutChange={handleLayoutChange}
               onResizeStop={handleResizeStop}
               isDraggable={false}
@@ -313,6 +322,14 @@ const Home: React.FC = () => {
             >
               {charts.map(chart => (
                 <div key={`chart-${chart.id}`} className={styles.dataCard} data-grid={{ i: `chart-${chart.id}`, ...layout.find(l => l.i === `chart-${chart.id}`) }}>
+                  {/* {chart.id === 13 && <SubcontractingRefundRateChart chartId={chart.id} />}
+                  {chart.id === 11 && <TimeEfficiencyChart chartId={chart.id} />}
+                  {chart.id === 15 && <PurchaseUnitPriceChart chartId={chart.id} />}
+                  {chart.id === 10 && <YieldAchievementRateChart chartId={chart.id} />}
+                  {chart.id === 12 && <RefundRateChart chartId={chart.id} />}
+                  {chart.id === 14 && <CostVarianceChart chartId={chart.id} />}
+                  {chart.id === 16 && <TurnoverRateChart chartId={chart.id} />}
+                  {chart.id === 17 && <InventoryLevelsChart chartId={chart.id} />} */}
                   <iframe
                     id={`iframe-${chart.id}`}
                     src={chart.chartImage}
@@ -347,3 +364,5 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+
+//同時要把x軸跟y軸裏的綫條值給隱藏起來

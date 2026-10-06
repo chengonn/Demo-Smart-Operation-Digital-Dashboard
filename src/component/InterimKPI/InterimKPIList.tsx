@@ -68,7 +68,7 @@ const InterimKPIList: React.FC<InterimKPIListProps> = ({ selectedStatus, onStatu
       return;
     }
     try {
-      const response = await updateApplication(id, { applyStatus: 1 });
+      const response = await updateApplication(id, { applyStatus: 2 });
       if (response.result) {
         alert('申請已批准');
         fetchApplications();

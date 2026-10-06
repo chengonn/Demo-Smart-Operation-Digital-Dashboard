@@ -121,8 +121,8 @@ const ExportControl: React.FC = () => {
             try {
               const permissionResponse = await getExportPermission(chart.id);
               if (permissionResponse.result && permissionResponse.data) {
-                const exporterList = permissionResponse.data.map((exporter: any) => exporter.exporter);
-                const exporterNames = permissionResponse.data.map((exporter: any) => exporter.exporterName);
+                const exporterList: string[] = permissionResponse.data.exporterList;
+                const exporterNames = exporterList.map(id => userData.find(user => user.userId === id)?.userName || id);
                 permissionsMap[chart.id] = exporterList;
                 userNamesMap[chart.id] = exporterNames; // Store the names
               }
