@@ -1,3 +1,4 @@
+import { t, getLocale } from "../../demo/i18n";
 import React, { useState, useEffect } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
@@ -139,24 +140,24 @@ const Home: React.FC = () => {
         setExportMessage(`匯出失敗: ${permissionResponse.message}`);
         return { result: false, errorCode: permissionResponse.errorCode, data: new Blob() };
       }
-  
+
       // 直接调用 exportData 而不调用 setExportPermission
       const exportResponse = await exportData(chartId, { exporterList: requestData, dashboardCharts: [chartId] });
       if (!exportResponse.result) {
         return { result: false, errorCode: exportResponse.errorCode, data: new Blob() };
       }
-  
+
       const blob = new Blob([exportResponse.data], { type: 'text/csv;charset=utf-8' });
       saveAs(blob, `demo_data_${chartId}.csv`);
-  
-      alert('數據匯出成功！');
+
+      alert(t('數據匯出成功！'));
       return { result: true, errorCode: '', data: blob };
     } catch (error) {
       console.error('匯出錯誤:', error);
-      alert('匯出過程中發生錯誤。請再試一次。');
+      alert(t('匯出過程中發生錯誤。請再試一次。'));
       return { result: false, errorCode: 'EXPORT_ERROR', data: new Blob() };
     }
-  };  
+  };
 
   const handleChartSelect = (chartId: number) => {
     setCurrentChartId(chartId);
@@ -176,7 +177,7 @@ const Home: React.FC = () => {
 
   const handleAddChart = async (chartsToAdd: any[]) => {
     if (!selectedDashboard) {
-      alert('Please select a dashboard first.');
+      alert(t('Please select a dashboard first.'));
       return;
     }
 
@@ -206,7 +207,7 @@ const Home: React.FC = () => {
       setLayout(prevLayout => [...prevLayout, ...newLayout]);
     } catch (error) {
       console.error('Error adding chart:', error);
-      alert('An error occurred while adding the chart.');
+      alert(t('An error occurred while adding the chart.'));
     } finally {
       setLoading(false);
     }
@@ -288,8 +289,8 @@ const Home: React.FC = () => {
           currentUserId={''}
         />
         <div className={styles.dashboard_container}>
-          {error && <div className={styles.errorMsg}>{error}</div>}
-          {exportMessage && <div className={styles.exportMessage}>{exportMessage}</div>}
+          {error && <div className={styles.errorMsg}>{t(error)}</div>}
+          {exportMessage && <div className={styles.exportMessage}>{t(exportMessage)}</div>}
           <div className='theContent'>
             {dashboardLoading && (
               <div className={styles.loadingOverlay}>
@@ -298,7 +299,8 @@ const Home: React.FC = () => {
             )}
              {charts.length === 0 ? (
               <div className={styles.noChartsMessage}>
-                您還未新增任何圖表，請點設定儀表板以新增圖表。
+
+                {t("您還未新增任何圖表，請點設定儀表板以新增圖表。")}
               </div>
             ) : (
             <div className={styles.demoGrid}>
@@ -314,8 +316,8 @@ const Home: React.FC = () => {
                   {chart.id === 17 && <InventoryLevelsChart chartId={chart.id} />} */}
                   <iframe
                     id={`iframe-${chart.id}`}
-                    src={chart.chartImage}
-                    title={chart.name}
+                    src={t(chart.chartImage)}
+                    title={t(chart.name)}
                     className={styles.chartIframe}
                     frameBorder="0"
                   />
@@ -326,7 +328,7 @@ const Home: React.FC = () => {
                     onChartSelect={() => handleChartSelect(chart.id)}
                     currentUserId={''}
                     canAssign={chart.canAssign}
-                    canExport={chart.canExport} 
+                    canExport={chart.canExport}
                     selectedDashboardId={selectedDashboard ? Number(selectedDashboard) : undefined}
                   >
                     {selectedChartData ? <LineChart data={selectedChartData} /> : <p></p>}
@@ -336,7 +338,7 @@ const Home: React.FC = () => {
             </div>
             )}
             <div className={styles.syncTime}>
-              {syncTime ? `最後同步時間: ${new Date(syncTime).toLocaleString()}` : 'Fetching sync time...'}
+              {t(syncTime ? `最後同步時間: ${new Date(syncTime).toLocaleString(getLocale())}` : 'Fetching sync time...')}
             </div>
           </div>
         </div>

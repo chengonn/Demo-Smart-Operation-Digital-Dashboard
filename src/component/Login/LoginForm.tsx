@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React from 'react';
 import styles from './LoginForm.module.css';
 import GoogleLoginButton from './GoogleLoginButton';
@@ -21,11 +22,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ error, onSuccess, onFailure }) =>
       </div>
 
       <div className={styles.title}>
-        <img src={LOGO} className={styles.LOGO} />
+        <img src={t(LOGO)} className={styles.LOGO} />
 
-        {error && <p className={styles.errorMsg}>{error}</p>}
+        {error && <p className={styles.errorMsg}>{t(error)}</p>}
 
-        <h1 className={styles.welcome}>歡迎回到智慧儀表板系統!</h1>
+        <h1 className={styles.welcome}>{t("歡迎回到智慧儀表板系統!")}</h1>
 
         <div id='signInButton' className={styles.loginButton}>
           <GoogleLoginButton onSuccess={onSuccess} onFailure={onFailure} />

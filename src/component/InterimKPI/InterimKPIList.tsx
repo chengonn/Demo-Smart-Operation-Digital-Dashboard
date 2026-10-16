@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useState, useEffect } from 'react';
 import Sidebar from './InterimKPISidebar';
 import styles from './InterimKPIList.module.css';
@@ -42,11 +43,11 @@ const InterimKPIList: React.FC<InterimKPIListProps> = ({ selectedStatus, onStatu
         setApplications(response.data);
       } else {
         console.error('API 響應格式異常:', response);
-        alert(response.message || '獲取申請失敗');
+        alert(t(response.message || '獲取申請失敗'));
       }
     } catch (error) {
       console.error('獲取申請時出錯:', error);
-      alert('獲取申請失敗');
+      alert(t('獲取申請失敗'));
     }
   };
 
@@ -64,20 +65,20 @@ const InterimKPIList: React.FC<InterimKPIListProps> = ({ selectedStatus, onStatu
   const handleApprove = async (id: number | undefined) => {
     if (id === undefined) {
       console.error('id 尚未定義');
-      alert('id 缺失');
+      alert(t('id 缺失'));
       return;
     }
     try {
       const response = await updateApplication(id, { applyStatus: 2 });
       if (response.result) {
-        alert('申請已批准');
+        alert(t('申請已批准'));
         fetchApplications();
       } else {
-        alert(response.message || '批准申請失敗');
+        alert(t(response.message || '批准申請失敗'));
       }
     } catch (error) {
       console.error('批准錯誤:', error);
-      alert('批准申請失敗');
+      alert(t('批准申請失敗'));
     }
   };
 
@@ -87,14 +88,14 @@ const InterimKPIList: React.FC<InterimKPIListProps> = ({ selectedStatus, onStatu
       const response = await deleteApplication(id);
       console.log('Delete response:', response);
       if (response.result) {
-        alert('申請已刪除');
+        alert(t('申請已刪除'));
         fetchApplications();
       } else {
-        alert(response.message || '刪除申請失敗');
+        alert(t(response.message || '刪除申請失敗'));
       }
     } catch (error) {
       console.error('Delete error:', error);
-      alert('刪除申請失敗');
+      alert(t('刪除申請失敗'));
     }
   };
 
@@ -103,14 +104,14 @@ const InterimKPIList: React.FC<InterimKPIListProps> = ({ selectedStatus, onStatu
       const response = await closeApplication(id);
       console.log('Close response:', response);
       if (response.result) {
-        alert('申請已關閉');
+        alert(t('申請已關閉'));
         fetchApplications();
       } else {
-        alert(response.message || '關閉申請失敗');
+        alert(t(response.message || '關閉申請失敗'));
       }
     } catch (error) {
       console.error('Close error:', error);
-      alert('關閉申請失敗');
+      alert(t('關閉申請失敗'));
     }
   };
 
@@ -119,26 +120,26 @@ const InterimKPIList: React.FC<InterimKPIListProps> = ({ selectedStatus, onStatu
       <Sidebar onStatusChange={onStatusChange} selectedStatus={selectedStatus} />
       <div className={`${styles.content} main_container`}>
         <div className={`${styles.theContent} theContent`}>
-          <h2 className={styles.h2}>申請記錄 － {selectedStatus}</h2>
+          <h2 className={styles.h2}>{t("申請記錄 －")} {t(selectedStatus)}</h2>
           <div className={styles.thePermissionList}>
             <table className={styles.customScrollbar}>
               <thead>
                 <tr className={styles.theNoWrapTitle}>
-                  <th>申請人</th>
-                  <th>保證人</th>
-                  <th>開始日</th>
-                  <th>到期日</th>
-                  <th>申請內容</th>
-                  <th>操作</th>
+                  <th>{t("申請人")}</th>
+                  <th>{t("保證人")}</th>
+                  <th>{t("開始日")}</th>
+                  <th>{t("到期日")}</th>
+                  <th>{t("申請內容")}</th>
+                  <th>{t("操作")}</th>
                 </tr>
               </thead>
               <tbody>
                 {Array.isArray(applications) && applications.map((app) => (
                   <tr key={app.id}>
-                    <td>{app.applicant}</td>
-                    <td>{app.guarantor}</td>
-                    <td>{app.startDate.split(' ')[0]}<br />{app.startDate.split(' ')[1]}</td>
-                    <td>{app.endDate.split(' ')[0]}<br />{app.endDate.split(' ')[1]}</td>
+                    <td>{t(app.applicant)}</td>
+                    <td>{t(app.guarantor)}</td>
+                    <td>{t(app.startDate.split(' ')[0])}<br />{t(app.startDate.split(' ')[1])}</td>
+                    <td>{t(app.endDate.split(' ')[0])}<br />{t(app.endDate.split(' ')[1])}</td>
                     <td>
                       <span className={styles.emailIcon} onClick={() => { handleEmailClick(app); }}>📧</span>
                     </td>
@@ -156,7 +157,8 @@ const InterimKPIList: React.FC<InterimKPIListProps> = ({ selectedStatus, onStatu
                               }
                             }}
                           >
-                            核准
+
+                            {t("核准")}
                           </button>
                           <button
                             className={styles.deleteButton}
@@ -169,7 +171,8 @@ const InterimKPIList: React.FC<InterimKPIListProps> = ({ selectedStatus, onStatu
                               }
                             }}
                           >
-                            關閉
+
+                            {t("關閉")}
                           </button>
                         </>
                       ) : selectedStatus === '正在啓用' ? (
@@ -184,7 +187,8 @@ const InterimKPIList: React.FC<InterimKPIListProps> = ({ selectedStatus, onStatu
                             }
                           }}
                         >
-                          關閉
+
+                          {t("關閉")}
                         </button>
                       ) : (
                         <button
@@ -198,7 +202,8 @@ const InterimKPIList: React.FC<InterimKPIListProps> = ({ selectedStatus, onStatu
                             }
                           }}
                         >
-                          刪除
+
+                          {t("刪除")}
                         </button>
                       )}
 
@@ -214,20 +219,20 @@ const InterimKPIList: React.FC<InterimKPIListProps> = ({ selectedStatus, onStatu
                 <div className={styles.formOverlay} onClick={handleCloseForm}></div>
                 <div className={styles.checkFormContent}>
                   <div id="appliedForm">
-                    <h2>申請表單</h2>
+                    <h2>{t("申請表單")}</h2>
                     <form>
-                      <label htmlFor="applicant">申請人:</label>
+                      <label htmlFor="applicant">{t("申請人:")}</label>
                       <input type="text" id="applicant" name="applicant" value={formData.applicant} disabled />
-                      <label htmlFor="guarantor">保證人:</label>
+                      <label htmlFor="guarantor">{t("保證人:")}</label>
                       <input type="text" id="guarantor" name="guarantor" value={formData.guarantor} disabled />
-                      <label htmlFor="startDate">開始日期:</label>
+                      <label htmlFor="startDate">{t("開始日期:")}</label>
                       <input type="text" id="startDate" name="startDate" value={formData.startDate} disabled />
-                      <label htmlFor="endDate">結束日期:</label>
+                      <label htmlFor="endDate">{t("結束日期:")}</label>
                       <input type="text" id="endDate" name="endDate" value={formData.endDate} disabled />
-                      <label htmlFor="content">申請內容:</label>
+                      <label htmlFor="content">{t("申請內容:")}</label>
                       <textarea id="content" name="content" value={formData.reason} className={styles.theTextarea} />
                       <div className={styles.buttonContainer}>
-                        <button type="button" onClick={handleCloseForm} className={styles.cancel}>關閉</button>
+                        <button type="button" onClick={handleCloseForm} className={styles.cancel}>{t("關閉")}</button>
                       </div>
                     </form>
                   </div>

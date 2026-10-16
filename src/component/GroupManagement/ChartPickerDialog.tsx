@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -49,7 +50,8 @@ const ChartPickerDialog: React.FC<ChartPickerDialogProps> = ({ open, onClose, on
         }}
       >
         <DialogTitle sx={{ textAlign: 'center' }}>
-          選擇圖表
+
+          {t("選擇圖表")}
         </DialogTitle>
         <DialogContent>
           <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 1, p: 1 }}>
@@ -57,7 +59,7 @@ const ChartPickerDialog: React.FC<ChartPickerDialogProps> = ({ open, onClose, on
               charts.map(chart => (
                 <Chip
                   key={chart.id}
-                  label={chart.name}
+                  label={t(chart.name)}
                   onClick={() => handleToggleChart(chart)}
                   sx={{
                     fontSize: '1rem',
@@ -74,17 +76,19 @@ const ChartPickerDialog: React.FC<ChartPickerDialogProps> = ({ open, onClose, on
                 />
               ))
             ) : (
-              <Box sx={{ color: '#bbbbbb' }}>沒有可用的圖表</Box>
+              <Box sx={{ color: '#bbbbbb' }}>{t("沒有可用的圖表")}</Box>
             )}
           </Box>
         </DialogContent>
         <DialogActions sx={{ gap: '5px', paddingBottom: '15px', paddingRight: '15px' }}>
           <Button onClick={onClose} sx={{ color: 'white', borderRadius: '20px', fontWeight: '700' }}>
-            取消
+
+            {t("取消")}
           </Button>
 
           <Button onClick={handleAdd} sx={{ color: 'white', borderRadius: '20px', fontWeight: '700' }}>
-            新增
+
+            {t("新增")}
           </Button>
         </DialogActions>
       </Dialog >

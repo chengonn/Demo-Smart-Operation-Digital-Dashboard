@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -67,7 +68,7 @@ const CostVarianceChart: React.FC<CostVarianceChartProps> = ({ chartId }) => {
 
   return (
     <div className={styles.chartContainer}>
-      <div className={styles.chartHeader}>生產成本偏差率</div>
+      <div className={styles.chartHeader}>{t("生產成本偏差率")}</div>
       <Line
         data={chartData}
         options={{

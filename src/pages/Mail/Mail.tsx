@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useState, useEffect, useCallback } from 'react';
 import styles from './Mail.module.css';
 import Filter from '../../component/Mail/Leftside/Filter';
@@ -53,12 +54,12 @@ const Mail: React.FC = () => {
           onDeleteEmail={handleDeleteEmail}
         />
         {loading && <div className={`loadingMsg`}></div>}
-        {error && <p className={styles.errorMsg}>{error}</p>}
+        {error && <p className={styles.errorMsg}>{t(error)}</p>}
       </div>
 
       <div className={`${styles.RightMail} ${showRightSide ? '' : styles.theMailHidden}`}>
         <button className={styles.backButton} onClick={handleBackClick}>
-          <img src={backIcon} className={styles.backIcon} alt="返回" />
+          <img src={t(backIcon)} className={styles.backIcon} alt={t("返回")} />
         </button>
         {selectedEmail && (
           <ChatBox

@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useState, useEffect } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
@@ -117,30 +118,31 @@ const UserPickerDialog: React.FC<{
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>交辦事項權限設置</DialogTitle>
+      <DialogTitle>{t("交辦事項權限設置")}</DialogTitle>
       <DialogContent>
         <Autocomplete
           multiple
           options={users}
-          getOptionLabel={(option) => `${option.userId} ${option.userName}`}
+          getOptionLabel={(option) => t(`${option.userId} ${option.userName}`)}
           value={selectedUsers}
           onChange={(event, newValue) => {
             setSelectedUsers(newValue as User[]);
           }}
           renderOption={(props, option) => (
             <li {...props}>
-              {option.userId} {option.userName}
+              {t(option.userId)} {t(option.userName)}
             </li>
           )}
           renderInput={(params) => (
-            <TextField {...params} variant="outlined" label="選擇用戶" />
+            <TextField {...params} variant="outlined" label={t("選擇用戶")} />
           )}
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>取消</Button>
+        <Button onClick={onClose}>{t("取消")}</Button>
         <Button onClick={handleSubmit} color="primary">
-          確認
+
+          {t("確認")}
         </Button>
       </DialogActions>
     </Dialog>
@@ -289,7 +291,7 @@ const AssignTaskControl: React.FC = () => {
         console.error('Error fetching users', error);
       });
     }
-  }, [currentChart, taskUpdated]); // Adding taskUpdated as a dependency  
+  }, [currentChart, taskUpdated]); // Adding taskUpdated as a dependency
 
   const handleOpenDialog = (chartId: number) => {
     setCurrentChart(chartId);
@@ -383,18 +385,18 @@ const AssignTaskControl: React.FC = () => {
           <table className="custom-scrollbar">
             <thead>
               <tr>
-                <th>圖表名稱</th>
-                <th>交辦事項權限設置</th>
+                <th>{t("圖表名稱")}</th>
+                <th>{t("交辦事項權限設置")}</th>
               </tr>
             </thead>
             <tbody>
               {charts.map((chart) => (
                 <tr key={chart.id}>
                   <td onClick={() => handleSetAlert(chart.name, chart.id)}>
-                    {chart.name}
+                    {t(chart.name)}
 
-                    <LargeTooltip title="點擊可以設定警訊上下限" open={alertSettingTooltipOpen} placement="right">
-                      <img src={alertIcon} className={styles.alertIcon} alt="" />
+                    <LargeTooltip title={t("點擊可以設定警訊上下限")} open={alertSettingTooltipOpen} placement="right">
+                      <img src={t(alertIcon)} className={styles.alertIcon} alt={t("")} />
                     </LargeTooltip>
 
                   </td>
@@ -402,10 +404,10 @@ const AssignTaskControl: React.FC = () => {
                   <td>
                     {currentUser.permissions.includes('create_task') || currentUser.permissions.includes('update_task') ? (
                       <Button variant="contained" color="primary" onClick={() => handleOpenDialog(chart.id)}>
-                        {getSelectedUserNames(chart.id)}
+                        {t(getSelectedUserNames(chart.id))}
                       </Button>
                     ) : (
-                      <span>無權限設置</span>
+                      <span>{t("無權限設置")}</span>
                     )}
                   </td>
                 </tr>

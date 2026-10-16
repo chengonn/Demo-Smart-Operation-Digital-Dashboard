@@ -15,6 +15,8 @@
 
 修改僅存在訪客自己的 localStorage，其他人不會看到；可用頁面上方「重設示範資料」還原。首次開啟直接顯示儀表板。使用者自行輸入的展示内容僅保存在該瀏覽器。
 
+頁面上方提供中文 / English 切換，語言選擇會保存在此瀏覽器；導覽、表單、示範內容、操作提示、圖表與匯出欄位皆提供雙語顯示。切換語言會保留表單內容，以及圖表目前的圖型和月份篩選。
+
 ## 本機執行
 
 ```sh
@@ -25,7 +27,7 @@ npm start
 ## 驗證與建置
 
 ```sh
-npm test -- --watchAll=false --runInBand --testMatch '**/src/**/*.test.ts'
+npm test -- --watchAll=false --runInBand --testMatch '**/src/**/*.test.ts' '**/src/**/*.test.tsx'
 npx tsc --noEmit
 npm run build
 node scripts/preview.cjs

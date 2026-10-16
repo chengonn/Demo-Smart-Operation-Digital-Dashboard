@@ -1,3 +1,4 @@
+import { t } from "../demo/i18n";
 //src\Hook\useGroupList.ts
 import { useState, useEffect, useCallback } from 'react';
 import { User } from '../services/types/userManagement';
@@ -34,10 +35,10 @@ const useGroupList = ({ groupId, onDeleteGroup }: UseGroupListParams) => {
         fetchChartsByGroupId(groupId),
         ChartService.getAllCharts(),
       ]);
-  
+
       console.log('Fetched users data:', userList);
       console.log('Fetched charts data:', chartsResponse);
-  
+
       setMemberData(userList);
       setCharts(chartsResponse.map(chart => ({
         id: chart.chartId,
@@ -51,14 +52,14 @@ const useGroupList = ({ groupId, onDeleteGroup }: UseGroupListParams) => {
     } catch (error) {
       console.error('Error fetching group data:', error);
     }
-  }, [groupId]);  
+  }, [groupId]);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
   const openConfirmDialog = (message: string, onConfirmCallback: () => void) => {
-    if (window.confirm(message)) {
+    if (window.confirm(t(message))) {
       onConfirmCallback();
     }
   };
@@ -86,7 +87,7 @@ const useGroupList = ({ groupId, onDeleteGroup }: UseGroupListParams) => {
           await fetchData();
         } else {
           console.error('無法找到有效的 userGroupId', { member, groupId });
-          alert('無法找到有效的 userGroupId，無法移除該成員');
+          alert(t('無法找到有效的 userGroupId，無法移除該成員'));
         }
       } catch (error) {
         console.error('Error removing member:', error);
@@ -133,7 +134,7 @@ const useGroupList = ({ groupId, onDeleteGroup }: UseGroupListParams) => {
         console.error('Error deleting group:', error);
       }
     });
-  };  
+  };
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

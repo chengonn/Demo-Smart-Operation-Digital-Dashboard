@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 //src\pages\AssignExportControl\AssignExportControl.tsx
 import React, { useState, useEffect } from 'react';
 import styles from './AssignExportControl.module.css';
@@ -39,7 +40,8 @@ useEffect(() => {
             onClick={() => handleButtonClick('ExportPermission')}
             className={activeButton === 'ExportPermission' ? styles.filterActive : ''}
           >
-            匯出權限管理
+
+            {t("匯出權限管理")}
             {/* 裝飾不要刪!!!!! */}
             <span></span><span></span><span></span><span></span>
           </button>
@@ -50,7 +52,8 @@ useEffect(() => {
             onClick={() => handleButtonClick('AssignPermission')}
             className={activeButton === 'AssignPermission' ? styles.filterActive : ''}
           >
-            交辦權限管理
+
+            {t("交辦權限管理")}
             {/* 裝飾別刪!!!!!!! */}
             <span></span><span></span><span></span><span></span>
           </button>

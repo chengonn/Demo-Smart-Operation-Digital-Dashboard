@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -66,7 +67,7 @@ const InventoryLevelsChart: React.FC<InventoryLevelsChartProps> = ({ chartId }) 
 
   return (
     <div className={styles.chartContainer}>
-      <div className={styles.chartHeader}>庫存水位</div>
+      <div className={styles.chartHeader}>{t("庫存水位")}</div>
       <Line
         data={chartData}
         options={{

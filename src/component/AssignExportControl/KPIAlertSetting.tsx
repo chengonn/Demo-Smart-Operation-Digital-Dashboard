@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -19,8 +20,8 @@ interface KPIAlertSettingProps {
   setLowerLimit: (value: number) => void;
   defaultProcessor: string;
   defaultAuditor: string;
-  defaultProcessorName: string; 
-  defaultAuditorName: string; 
+  defaultProcessorName: string;
+  defaultAuditorName: string;
   onSubmit: (lowerLimit: number, upperLimit: number, defaultProcessor: string, defaultAuditor: string, chartId: number) => void; // 添加 chartId 参数
   chartId: number;
 }
@@ -147,9 +148,9 @@ export default function KPIAlertSetting({ onClose, chartName, upperLimit, lowerL
     <div className={styles.overlay}
       onClick={(e) => { if (e.target === e.currentTarget) { onClose(); } }}>
       <div className={styles.settingAlert}>
-        <h2>{chartName}警訊</h2>
-        <div className={`${styles.descriptionText} ${styles.firstline}`}>若數值超過此區間</div>
-        <div className={styles.descriptionText}>系統會發送異常信件通知您</div>
+        <h2>{t(chartName)}{t("警訊")}</h2>
+        <div className={`${styles.descriptionText} ${styles.firstline}`}>{t("若數值超過此區間")}</div>
+        <div className={styles.descriptionText}>{t("系統會發送異常信件通知您")}</div>
         <Box
           sx={{
             display: 'flex',
@@ -166,10 +167,12 @@ export default function KPIAlertSetting({ onClose, chartName, upperLimit, lowerL
         >
           <div className={styles.theText}>
             <p className={styles.textField}>
-              最低值
+
+              {t("最低值")}
             </p>
             <p className={styles.textField}>
-              最高值
+
+              {t("最高值")}
             </p>
           </div>
 
@@ -241,10 +244,10 @@ export default function KPIAlertSetting({ onClose, chartName, upperLimit, lowerL
             className={styles.autocomplete}
             value={selectedProcessor || { id: 0, userId: defaultProcessor, userName: defaultProcessorName, groupId: 0, name: '', department: '', position: '', userGroupId: 0, available: true, createId: '', createDate: '', modifyId: '', modifyDate: '' }}
             options={users}
-            getOptionLabel={(option) => option.userName}
+            getOptionLabel={(option) => t(option.userName)}
             onChange={(event, newValue) => setSelectedProcessor(newValue)}
             renderInput={(params) => (
-              <TextField {...params} label="選擇處理者" />
+              <TextField {...params} label={t("選擇處理者")} />
             )}
           />
         </div>
@@ -253,17 +256,17 @@ export default function KPIAlertSetting({ onClose, chartName, upperLimit, lowerL
             className={styles.autocomplete}
             value={selectedAuditor || { id: 0, userId: defaultAuditor, userName: defaultAuditorName, groupId: 0, name: '', department: '', position: '', userGroupId: 0, available: true, createId: '', createDate: '', modifyId: '', modifyDate: '' }}
             options={users}
-            getOptionLabel={(option) => option.userName} // 更新這裡
+            getOptionLabel={(option) => t(option.userName)} // 更新這裡
             onChange={(event, newValue) => setSelectedAuditor(newValue)}
             renderInput={(params) => (
-              <TextField {...params} label="選擇稽核者" />
+              <TextField {...params} label={t("選擇稽核者")} />
             )}
           />
         </div>
 
         <div className={styles.buttonGroup}>
-          <button className={styles.cancel} onClick={onClose}>取消</button>
-          <button className={styles.submit} onClick={handleConfirm}>確定</button>
+          <button className={styles.cancel} onClick={onClose}>{t("取消")}</button>
+          <button className={styles.submit} onClick={handleConfirm}>{t("確定")}</button>
         </div>
       </div>
     </div>

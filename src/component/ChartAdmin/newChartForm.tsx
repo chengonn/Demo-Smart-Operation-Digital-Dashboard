@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useState } from 'react';
 import styles from './ChartAdminForm.module.css';
 import { Avatar, Stack } from '@mui/material';
@@ -67,14 +68,14 @@ const NewChartForm: React.FC<NewChartFormProps> = ({ onSubmit, onClose }) => {
     <div>
       <div className={styles.formOverlay} onClick={onClose}></div>
       <div onClick={(e) => e.stopPropagation()} className={styles.checkFormContent}>
-        <h2>新增圖表</h2>
+        <h2>{t("新增圖表")}</h2>
         <form onSubmit={handleSubmit}>
           <div className={styles.newKPIlabelGroup}>
-            <label htmlFor='newKpiName'>圖表名稱</label>
+            <label htmlFor='newKpiName'>{t("圖表名稱")}</label>
             <input
               ref={newKpiNameInputRef}
               autoComplete='off'
-              placeholder='請輸入新圖表的名稱'
+              placeholder={t("請輸入新圖表的名稱")}
               id='newKpiName'
               type="text"
               value={chartName}
@@ -91,7 +92,7 @@ const NewChartForm: React.FC<NewChartFormProps> = ({ onSubmit, onClose }) => {
                     className={styles.newCodeFile}
                     onClick={() => document.getElementById('newKpiCodeuploadButton')?.click()}
                   >
-                    {newCodeFile.name}
+                    {t(newCodeFile.name)}
                   </p>
                   <input
                     accept=".py"
@@ -103,7 +104,7 @@ const NewChartForm: React.FC<NewChartFormProps> = ({ onSubmit, onClose }) => {
                 </>
               ) : (
                 <div className={styles.newCodeContainer}>
-                  <label htmlFor="newKpiCodeuploadButton">圖表程式碼上傳</label>
+                  <label htmlFor="newKpiCodeuploadButton">{t("圖表程式碼上傳")}</label>
                   <label htmlFor="newKpiCodeuploadButton" style={{ cursor: 'pointer' }}>
                     <input
                       accept=".py"
@@ -112,7 +113,7 @@ const NewChartForm: React.FC<NewChartFormProps> = ({ onSubmit, onClose }) => {
                       style={{ display: 'none' }}
                       onChange={handleNewCodeFileChange}
                     />
-                    <img src={PythonIcon} className={styles.CodeIcon} alt="程式碼圖標" />
+                    <img src={t(PythonIcon)} className={styles.CodeIcon} alt={t("程式碼圖標")} />
                   </label>
                 </div>
               )}
@@ -124,8 +125,8 @@ const NewChartForm: React.FC<NewChartFormProps> = ({ onSubmit, onClose }) => {
               {image ? (
                 <>
                   <Avatar
-                    alt="上傳示意圖"
-                    src={image}
+                    alt={t("上傳示意圖")}
+                    src={t(image)}
                     sx={{
                       width: 180,
                       height: 180,
@@ -146,7 +147,7 @@ const NewChartForm: React.FC<NewChartFormProps> = ({ onSubmit, onClose }) => {
                 </>
               ) : (
                 <div className={styles.newImgContainer}>
-                  <label htmlFor="uploadButton">圖表示意圖上傳</label>
+                  <label htmlFor="uploadButton">{t("圖表示意圖上傳")}</label>
                   <label htmlFor="uploadButton" style={{ cursor: 'pointer' }}>
                     <input
                       accept="image/*"
@@ -155,7 +156,7 @@ const NewChartForm: React.FC<NewChartFormProps> = ({ onSubmit, onClose }) => {
                       style={{ display: 'none' }}
                       onChange={handleImageChange}
                     />
-                    <img src={ImgIcon} className={styles.ImgIcon} alt="圖片圖標" />
+                    <img src={t(ImgIcon)} className={styles.ImgIcon} alt={t("圖片圖標")} />
                   </label>
                 </div>
               )}
@@ -163,8 +164,8 @@ const NewChartForm: React.FC<NewChartFormProps> = ({ onSubmit, onClose }) => {
           </div>
 
           <div className={styles.newKPIbuttonGroup}>
-            <button type="button" onClick={onClose} className={styles.cancel}>取消</button>
-            <button type="submit" className={styles.submit}>提交</button>
+            <button type="button" onClick={onClose} className={styles.cancel}>{t("取消")}</button>
+            <button type="submit" className={styles.submit}>{t("提交")}</button>
           </div>
         </form>
       </div>

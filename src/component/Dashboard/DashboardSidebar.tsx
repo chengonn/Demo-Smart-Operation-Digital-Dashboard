@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 //src\component\Dashboard\DashboardSidebar.tsx
 import React, { useState, useEffect, useCallback } from 'react';
 import closearrow from '../../assets/icon/close-arrow.svg';
@@ -69,7 +70,7 @@ const DashboardSidebar: React.FC<{
           setCharts(response.data);
         } catch (error) {
           console.error('Failed to fetch charts:', error);
-          alert('Failed to fetch charts. Please try again later.');
+          alert(t('Failed to fetch charts. Please try again later.'));
         }
       }
     };
@@ -85,7 +86,7 @@ const DashboardSidebar: React.FC<{
         setUsers(userList);
       } catch (error) {
         console.error('Failed to fetch users:', error);
-        alert('Failed to fetch users. Please try again later.');
+        alert(t('Failed to fetch users. Please try again later.'));
       }
     };
     fetchUsers();
@@ -118,7 +119,7 @@ const DashboardSidebar: React.FC<{
   const handleRequestSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedChartId) {
-      alert('請選擇一個圖表進行申請。');
+      alert(t('請選擇一個圖表進行申請。'));
       return;
     }
 
@@ -133,14 +134,14 @@ const DashboardSidebar: React.FC<{
       };
       const response = await createApplication(requestData);
       if (response.result) {
-        alert('請求提交成功');
+        alert(t('請求提交成功'));
         setIsFormVisible(false);
       } else {
-        alert('請求提交失敗：' + response.message);
+        alert(t('請求提交失敗：' + response.message));
       }
     } catch (error) {
       console.error('提交 KPI 請求時出錯:', error);
-      alert('提交 KPI 請求失敗。請重試。');
+      alert(t('提交 KPI 請求失敗。請重試。'));
     }
   };
 
@@ -340,17 +341,18 @@ const DashboardSidebar: React.FC<{
     <div className={`${styles.wrapper} ${isActive ? styles.active : ''}`}>
       <div className={styles.sidebar}>
         {loading && <div className={styles.loadingMsg}></div>}
-        {error && <div className={styles.errorMsg}>{error}</div>}
+        {error && <div className={styles.errorMsg}>{t(error)}</div>}
         <div className={styles.bg_shadow} onClick={() => setIsActive(false)}></div>
         <div className={styles.sidebar_inner}>
           <button className={styles.openbutton} onClick={toggleActiveState} disabled={isDisabled}></button>
           <div className={styles.close} onClick={() => setIsActive(false)}>
-            <img src={closearrow} alt="Click to close sidebar" />
+            <img src={t(closearrow)} alt={t("Click to close sidebar")} />
           </div>
           <ul className={`${styles.sidebar_menu} mostly-customized-scrollbar`}>
             <li>
               <button className={styles.addButton} onClick={handleAddDashboardOpen}>
-                新儀表板
+
+                {t("新儀表板")}
               </button>
             </li>
             {dashboards.map(dashboard => (
@@ -372,16 +374,16 @@ const DashboardSidebar: React.FC<{
                     }}
                   />
                 ) : (
-                  <span>{dashboard.name}</span>
+                  <span>{t(dashboard.name)}</span>
                 )}
                 <IconButton
-                  aria-label="更多"
+                  aria-label={t("更多")}
                   aria-controls={`long-menu-${dashboard.id}`}
                   aria-haspopup="true"
                   onClick={(event) => handleMenuOpen(event, dashboard.id)}
                   className={styles.dropdownButton}
                 >
-                  <img src={more} alt="操作" />
+                  <img src={t(more)} alt={t("操作")} />
                 </IconButton>
 
                 <Menu
@@ -393,9 +395,9 @@ const DashboardSidebar: React.FC<{
                   className={styles.dropdownMenu}
                 >
                   {activeDashboard === dashboard.id && (
-                    <MenuItem onClick={() => handleEditDashboard(Number(dashboard.id))}>設定儀表板</MenuItem>
+                    <MenuItem onClick={() => handleEditDashboard(Number(dashboard.id))}>{t("設定儀表板")}</MenuItem>
                   )}
-                  <MenuItem onClick={() => { handleDeleteDashboard(dashboard.id); handleMenuClose(dashboard.id); }}>刪除儀表板</MenuItem>
+                  <MenuItem onClick={() => { handleDeleteDashboard(dashboard.id); handleMenuClose(dashboard.id); }}>{t("刪除儀表板")}</MenuItem>
                 </Menu>
               </li>
             ))}

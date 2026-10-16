@@ -1,3 +1,4 @@
+import { t } from "../../../demo/i18n";
 import React, { useState, useEffect } from 'react';
 import { Doughnut, Bar, Line } from 'react-chartjs-2';
 
@@ -98,11 +99,11 @@ const UserChart: React.FC = () => {
 
   return (
     <div>
-      <h2>假資料圖表示例</h2>
+      <h2>{t("假資料圖表示例")}</h2>
       <Doughnut data={doughnutData} />
-      <h3>長條圖</h3>
+      <h3>{t("長條圖")}</h3>
       <Bar data={barData} />
-      <h3>折線圖</h3>
+      <h3>{t("折線圖")}</h3>
       <Line data={lineData} />
     </div>
   );

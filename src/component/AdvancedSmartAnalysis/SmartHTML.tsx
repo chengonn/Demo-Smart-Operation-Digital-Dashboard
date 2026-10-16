@@ -1,3 +1,4 @@
+import { t, getLocale } from "../../demo/i18n";
 import React, { useState, useEffect } from 'react';
 import styles from './SmartHTML.module.css';
 import ChartService from '../../services/ChartService';
@@ -29,7 +30,7 @@ const SmartHTML: React.FC<SmartHTMLProps> = ({ chartHTML }) => {
 
       {chartHTML ? (
         <iframe
-          src={chartHTML}
+          src={t(chartHTML)}
           title="Smart Viewer"
           className={styles.iframe}
         ></iframe>
@@ -38,7 +39,7 @@ const SmartHTML: React.FC<SmartHTMLProps> = ({ chartHTML }) => {
       )}
 
       <div className={styles.syncTime}>
-        {syncTime ? `最後同步時間: ${new Date(syncTime).toLocaleString()}` : 'Fetching sync time...'}
+        {t(syncTime ? `最後同步時間: ${new Date(syncTime).toLocaleString(getLocale())}` : 'Fetching sync time...')}
       </div>
     </div>
   );

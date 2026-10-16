@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useState, useEffect } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
@@ -37,30 +38,31 @@ const UserPicker: React.FC<UserPickerProps> = ({ open, users, onClose, onSubmit 
 
   return (
     <Dialog open={open} onClose={onClose} style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-      <DialogTitle style={{ color: 'black', fontSize: '1.5rem', fontWeight: 'bold' }}>匯出資料權限設置</DialogTitle>
+      <DialogTitle style={{ color: 'black', fontSize: '1.5rem', fontWeight: 'bold' }}>{t("匯出資料權限設置")}</DialogTitle>
       <DialogContent style={{ paddingTop: '15px' }}>
         <Autocomplete
           multiple
           options={users || []}
-          getOptionLabel={(option) => `${option.id} ${option.userName}`}
+          getOptionLabel={(option) => t(`${option.id} ${option.userName}`)}
           onChange={(event, newValue) => {
             setSelectedUsers(newValue as User[]);
           }}
           value={selectedUsers}
           renderOption={(props, option) => (
             <li {...props} key={option.id}>
-              {option.id} {option.userName}
+              {t(option.id)} {t(option.userName)}
             </li>
           )}
           renderInput={(params) => (
-            <TextField {...params} variant="outlined" label="選擇用戶" placeholder="或輸入文字以查找..." />
+            <TextField {...params} variant="outlined" label={t("選擇用戶")} placeholder={t("或輸入文字以查找...")} />
           )}
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>取消</Button>
+        <Button onClick={onClose}>{t("取消")}</Button>
         <Button onClick={handleSubmit} color="primary">
-          確認
+
+          {t("確認")}
         </Button>
       </DialogActions>
     </Dialog>

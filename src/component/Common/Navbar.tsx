@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './NavBar.module.css';
@@ -72,14 +73,14 @@ const NavBar: React.FC = () => {
 
           <a className={`brand ${styles.navbarHamburger} ${styles.theLOGO}`} id='hamburger' href="#">
             {!ShowBurgerIcon ? (<>
-              <img className={`brandImg ${styles.brandImg} ${styles.showBurgerIcon}`} src={LOGO} alt="menu" />
-              <h1 className={styles.LogoTitle}>智慧儀表板系統</h1>
+              <img className={`brandImg ${styles.brandImg} ${styles.showBurgerIcon}`} src={t(LOGO)} alt={t("menu")} />
+              <h1 className={styles.LogoTitle}>{t("智慧儀表板系統")}</h1>
             </>
             ) : (
               <>
-                <img className={`brandImg ${styles.brandImg} ${styles.showBurgerIcon} ${styles.theBurger}`} src={burgerMenuIcon} alt="menu" />
-                <img className={`brandImg ${styles.brandImg} ${styles.showBurgerIcon} ${styles.theLOGOicon}`} src={LOGO} alt="menu" />
-                <h1 className={styles.LogoTitle}>智慧儀表板系統</h1>
+                <img className={`brandImg ${styles.brandImg} ${styles.showBurgerIcon} ${styles.theBurger}`} src={t(burgerMenuIcon)} alt={t("menu")} />
+                <img className={`brandImg ${styles.brandImg} ${styles.showBurgerIcon} ${styles.theLOGOicon}`} src={t(LOGO)} alt={t("menu")} />
+                <h1 className={styles.LogoTitle}>{t("智慧儀表板系統")}</h1>
               </>)}
           </a>
 
@@ -105,10 +106,10 @@ const NavBar: React.FC = () => {
                   className={`nav-link ${styles.navLink} ${activeLink.startsWith('/home') ? styles.activeNavLink : ''}`}
                   to="/home"
                 >
-                  <WhiteTooltip title="數位儀表板" enterDelay={700} leaveDelay={100} >
-                    <img className={styles.navbarNavItemImg} src={dashBoardIcon} alt="home" />
+                  <WhiteTooltip title={t("數位儀表板")} enterDelay={700} leaveDelay={100} >
+                    <img className={styles.navbarNavItemImg} src={t(dashBoardIcon)} alt={t("home")} />
                   </WhiteTooltip>
-                  <span className={`${styles.navbarText} ${activeLink.startsWith('/home') ? styles.activeNavLinkText : ''}`}>數位儀表板</span>
+                  <span className={`${styles.navbarText} ${activeLink.startsWith('/home') ? styles.activeNavLinkText : ''}`}>{t("數位儀表板")}</span>
                 </Link>
               </li>
 
@@ -118,10 +119,10 @@ const NavBar: React.FC = () => {
                   className={`nav-link ${styles.navLink} ${activeLink.startsWith('/mail') ? styles.activeNavLink : ''}`}
                   to="/mail"
                 >
-                  <WhiteTooltip title="交辦事項" enterDelay={700} leaveDelay={100} >
-                    <img className={`${styles.navbarNavItemImg} ${styles.navbarNavItemMail}`} src={emailIcon} alt="mail" />
+                  <WhiteTooltip title={t("交辦事項")} enterDelay={700} leaveDelay={100} >
+                    <img className={`${styles.navbarNavItemImg} ${styles.navbarNavItemMail}`} src={t(emailIcon)} alt={t("mail")} />
                   </WhiteTooltip>
-                  <span className={`${styles.navbarText} ${activeLink.startsWith('/mail') ? styles.activeNavLinkText : ''}`}>交辦事項</span>
+                  <span className={`${styles.navbarText} ${activeLink.startsWith('/mail') ? styles.activeNavLinkText : ''}`}>{t("交辦事項")}</span>
                 </Link>
               </li>
 
@@ -132,10 +133,10 @@ const NavBar: React.FC = () => {
                     className={`nav-link ${styles.navLink} ${activeLink.startsWith('/ChartAdmin') ? styles.activeNavLink : ''}`}
                     to="/ChartAdmin"
                   >
-                    <WhiteTooltip title="圖表管理" enterDelay={700} leaveDelay={100} >
-                      <img className={styles.navbarNavItemImg} src={ChartAdmin} alt="ChartAdmin" onClick={() => console.log(activeLink)} />
+                    <WhiteTooltip title={t("圖表管理")} enterDelay={700} leaveDelay={100} >
+                      <img className={styles.navbarNavItemImg} src={t(ChartAdmin)} alt={t("ChartAdmin")} onClick={() => console.log(activeLink)} />
                     </WhiteTooltip>
-                    <span className={`${styles.navbarText} ${activeLink.startsWith('/ChartAdmin') ? styles.activeNavLinkText : ''}`}>圖表管理</span>
+                    <span className={`${styles.navbarText} ${activeLink.startsWith('/ChartAdmin') ? styles.activeNavLinkText : ''}`}>{t("圖表管理")}</span>
                   </Link>
                 </li>
               )}
@@ -148,10 +149,10 @@ const NavBar: React.FC = () => {
                     className={`nav-link ${styles.navLink} ${activeLink.startsWith('/AssignExportControl') ? styles.activeNavLink : ''}`}
                     to="/AssignExportControl"
                   >
-                    <WhiteTooltip title="權限管理" enterDelay={700} leaveDelay={100}>
-                      <img className={styles.navbarNavItemImg} src={AssignExportControlIcon} alt="graphManage" />
+                    <WhiteTooltip title={t("權限管理")} enterDelay={700} leaveDelay={100}>
+                      <img className={styles.navbarNavItemImg} src={t(AssignExportControlIcon)} alt={t("graphManage")} />
                     </WhiteTooltip>
-                    <span className={`${styles.navbarText} ${activeLink.startsWith('/AssignExportControl') ? styles.activeNavLinkText : ''}`}>權限管理</span>
+                    <span className={`${styles.navbarText} ${activeLink.startsWith('/AssignExportControl') ? styles.activeNavLinkText : ''}`}>{t("權限管理")}</span>
                   </Link>
                 </li>
               )}
@@ -163,10 +164,10 @@ const NavBar: React.FC = () => {
                     className={`nav-link ${styles.navLink} ${activeLink.startsWith('/UserControl') ? styles.activeNavLink : ''}`}
                     to="/UserControl/userApply"
                   >
-                    <WhiteTooltip title="帳號管理" enterDelay={700} leaveDelay={100}>
-                      <img className={styles.navbarNavItemImg} src={UserControl} alt="UserControl" />
+                    <WhiteTooltip title={t("帳號管理")} enterDelay={700} leaveDelay={100}>
+                      <img className={styles.navbarNavItemImg} src={t(UserControl)} alt={t("UserControl")} />
                     </WhiteTooltip>
-                    <span className={`${styles.navbarText} ${activeLink.startsWith('/UserControl') ? styles.activeNavLinkText : ''}`}>帳號管理</span>
+                    <span className={`${styles.navbarText} ${activeLink.startsWith('/UserControl') ? styles.activeNavLinkText : ''}`}>{t("帳號管理")}</span>
                   </Link>
                 </li>
               )}
@@ -178,10 +179,10 @@ const NavBar: React.FC = () => {
                     className={`nav-link ${styles.navLink} ${activeLink.startsWith('/InterimKPIControl') ? styles.activeNavLink : ''}`}
                     to="/InterimKPIControl"
                   >
-                    <WhiteTooltip title="查看圖表申請" enterDelay={700} leaveDelay={100} >
-                      <img className={styles.navbarNavItemImg} src={InterimKPIControl} alt="graphManage" />
+                    <WhiteTooltip title={t("查看圖表申請")} enterDelay={700} leaveDelay={100} >
+                      <img className={styles.navbarNavItemImg} src={t(InterimKPIControl)} alt={t("graphManage")} />
                     </WhiteTooltip>
-                    <span className={`${styles.navbarText} ${activeLink.startsWith('/InterimKPIControl') ? styles.activeNavLinkText : ''}`}>查看圖表申請</span>
+                    <span className={`${styles.navbarText} ${activeLink.startsWith('/InterimKPIControl') ? styles.activeNavLinkText : ''}`}>{t("查看圖表申請")}</span>
                   </Link>
                 </li>
               )}
@@ -193,11 +194,11 @@ const NavBar: React.FC = () => {
                     className={`nav-link ${styles.navLink} ${activeLink.startsWith('/GroupManagement') ? styles.activeNavLink : ''}`}
                     to="/GroupManagement"
                   >
-                    <WhiteTooltip title="群組管理" enterDelay={700} leaveDelay={100} >
-                      <img className={styles.navbarNavItemImg} src={groupIcon} alt="GroupManagement" />
+                    <WhiteTooltip title={t("群組管理")} enterDelay={700} leaveDelay={100} >
+                      <img className={styles.navbarNavItemImg} src={t(groupIcon)} alt={t("GroupManagement")} />
                     </WhiteTooltip>
 
-                    <span className={`${styles.navbarText} ${activeLink.startsWith('/GroupManagement') ? styles.activeNavLinkText : ''}`}>群組管理</span>
+                    <span className={`${styles.navbarText} ${activeLink.startsWith('/GroupManagement') ? styles.activeNavLinkText : ''}`}>{t("群組管理")}</span>
                   </Link>
                 </li>
               )}
@@ -210,15 +211,15 @@ const NavBar: React.FC = () => {
                   className={`nav-link ${styles.navLink} ${activeLink.startsWith('/profile') ? styles.activeNavLink : ''}`}
                   to="/profile"
                 >
-                  <WhiteTooltip title="個人資料" enterDelay={700} leaveDelay={100} >
+                  <WhiteTooltip title={t("個人資料")} enterDelay={700} leaveDelay={100} >
                     <div className={`${styles.theUserName} ${activeLink.startsWith('/profile') ? styles.activeUserName : ''}`}>
-                      {user?.name
+                      {t(user?.name
                         ? user.name
                         : (user?.id
                           ? user.id
                           : (user?.email
                             ? user.email.split('@')[0]
-                            : '訪客'))}
+                            : '訪客')))}
                     </div>
                   </WhiteTooltip>
                 </Link>
@@ -233,4 +234,3 @@ const NavBar: React.FC = () => {
 };
 
 export default NavBar;
-

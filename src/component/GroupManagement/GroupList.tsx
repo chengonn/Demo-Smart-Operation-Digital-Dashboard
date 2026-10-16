@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React from 'react';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
@@ -45,7 +46,8 @@ const GroupList: React.FC<GroupListProps> = ({ groupId, activeButton, handleButt
           onClick={() => handleButtonClick('memberControl')}
           className={activeButton === 'memberControl' ? styles.filterActive : ''}
         >
-          群組成員
+
+          {t("群組成員")}
           <span></span><span></span><span></span><span></span>
         </button>
         <button
@@ -53,7 +55,8 @@ const GroupList: React.FC<GroupListProps> = ({ groupId, activeButton, handleButt
           onClick={() => handleButtonClick('graphControl')}
           className={activeButton === 'graphControl' ? styles.filterActive : ''}
         >
-          群組可視圖表
+
+          {t("群組可視圖表")}
           <span></span><span></span><span></span><span></span>
         </button>
       </div>
@@ -65,13 +68,15 @@ const GroupList: React.FC<GroupListProps> = ({ groupId, activeButton, handleButt
               onClick={() => setShowMemberPicker(true)}
               className={styles.addButton}
             >
-              新增成員
+
+              {t("新增成員")}
             </Button>
             <Button
               onClick={handleDeleteGroup}
               className={styles.deleteGroupButton}
             >
-              刪除群組
+
+              {t("刪除群組")}
             </Button>
             <IconButton
               aria-label="more"
@@ -85,7 +90,7 @@ const GroupList: React.FC<GroupListProps> = ({ groupId, activeButton, handleButt
                 },
               }}
             >
-              <img src={moreInfo} className={styles.moreIcon} alt="操作" />
+              <img src={t(moreInfo)} className={styles.moreIcon} alt={t("操作")} />
             </IconButton>
             <Menu
               id="long-menu"
@@ -95,8 +100,8 @@ const GroupList: React.FC<GroupListProps> = ({ groupId, activeButton, handleButt
               onClose={handleMenuClose}
               className={styles.dropdownMenu}
             >
-              <MenuItem onClick={() => { setShowMemberPicker(true); handleMenuClose(); }}>新增成員</MenuItem>
-              <MenuItem onClick={() => { handleDeleteGroup(); handleMenuClose(); }}>刪除群組</MenuItem>
+              <MenuItem onClick={() => { setShowMemberPicker(true); handleMenuClose(); }}>{t("新增成員")}</MenuItem>
+              <MenuItem onClick={() => { handleDeleteGroup(); handleMenuClose(); }}>{t("刪除群組")}</MenuItem>
             </Menu>
 
             {showMemberPicker && (
@@ -114,32 +119,33 @@ const GroupList: React.FC<GroupListProps> = ({ groupId, activeButton, handleButt
               <table className="custom-scrollbar">
                 <thead>
                   <tr>
-                    <th>姓名</th>
-                    <th>所屬部門</th>
-                    <th>職稱</th>
-                    <th>操作</th>
+                    <th>{t("姓名")}</th>
+                    <th>{t("所屬部門")}</th>
+                    <th>{t("職稱")}</th>
+                    <th>{t("操作")}</th>
                   </tr>
                 </thead>
                 <tbody>
                   {memberData.length > 0 ? (
                     memberData.map(member => (
                       <tr key={member.userId}>
-                        <td>{member.userName}</td>
-                        <td>{member.department}</td>
-                        <td>{member.position || '未指定'}</td>
+                        <td>{t(member.userName)}</td>
+                        <td>{t(member.department)}</td>
+                        <td>{t(member.position || '未指定')}</td>
                         <td>
                           <Button
                             variant="outlined"
                             onClick={() => handleRemove(member.userId, member.userName)}
                             className={styles.removeButton}
                           >
-                            移除
+
+                            {t("移除")}
                           </Button>
                         </td>
                       </tr>
                     ))
                   ) : (
-                    <tr><td colSpan={4}>查無成員</td></tr>
+                    <tr><td colSpan={4}>{t("查無成員")}</td></tr>
                   )}
                 </tbody>
 
@@ -154,10 +160,11 @@ const GroupList: React.FC<GroupListProps> = ({ groupId, activeButton, handleButt
               onClick={() => setShowChartPicker(true)}
               className={styles.addButton}
             >
-              新增圖表
+
+              {t("新增圖表")}
             </Button>
             <IconButton
-              aria-label="更多操作"
+              aria-label={t("更多操作")}
               aria-controls="long-menu2"
               aria-haspopup="true"
               onClick={handleMenuOpen}
@@ -168,7 +175,7 @@ const GroupList: React.FC<GroupListProps> = ({ groupId, activeButton, handleButt
                 },
               }}
             >
-              <img src={moreInfo} className={styles.moreIcon} alt="操作" />
+              <img src={t(moreInfo)} className={styles.moreIcon} alt={t("操作")} />
             </IconButton>
             <Menu
               id="long-menu2"
@@ -178,7 +185,7 @@ const GroupList: React.FC<GroupListProps> = ({ groupId, activeButton, handleButt
               onClose={handleMenuClose}
               className={styles.dropdownMenu}
             >
-              <MenuItem onClick={() => { setShowChartPicker(true); handleMenuClose(); }}>新增圖表</MenuItem>
+              <MenuItem onClick={() => { setShowChartPicker(true); handleMenuClose(); }}>{t("新增圖表")}</MenuItem>
             </Menu>
 
             {showChartPicker && (
@@ -193,28 +200,29 @@ const GroupList: React.FC<GroupListProps> = ({ groupId, activeButton, handleButt
               <table className="custom-scrollbar">
                 <thead>
                   <tr>
-                    <th>圖表名稱</th>
-                    <th>操作</th>
+                    <th>{t("圖表名稱")}</th>
+                    <th>{t("操作")}</th>
                   </tr>
                 </thead>
                 <tbody>
                   {charts.length > 0 ? (
                     charts.map(chart => (
                       <tr key={chart.id}>
-                        <td>{chart.name}</td>
+                        <td>{t(chart.name)}</td>
                         <td>
                           <Button
                             variant="outlined"
                             onClick={() => handleRemoveChart(chart.id)}
                             className={styles.removeButton}
                           >
-                            移除
+
+                            {t("移除")}
                           </Button>
                         </td>
                       </tr>
                     ))
                   ) : (
-                    <tr><td colSpan={2}>查無圖表</td></tr>
+                    <tr><td colSpan={2}>{t("查無圖表")}</td></tr>
                   )}
                 </tbody>
               </table>

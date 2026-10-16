@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useEffect, useState, useCallback } from 'react';
 import closearrow from '../../assets/icon/close-arrow.svg';
 import styles from './GroupManagementSideBar.module.css';
@@ -43,7 +44,7 @@ const GroupManagementSidebar: React.FC<SidebarProps> = ({ onSelectGroup, groupId
     try {
       const fetchedGroups = await fetchGroups();
       setGroups(fetchedGroups);
-      
+
       // 自動選取第一個群組
       if (fetchedGroups.length > 0) {
         const firstGroupId = fetchedGroups[0].id;
@@ -111,12 +112,13 @@ const GroupManagementSidebar: React.FC<SidebarProps> = ({ onSelectGroup, groupId
             disabled={isDisabled}
           ></button>
           <div className={styles.close} onClick={() => setIsActive(false)}>
-            <img src={closearrow} alt="關閉側邊欄" />
+            <img src={t(closearrow)} alt={t("關閉側邊欄")} />
           </div>
           <ul className={`${styles.sidebar_menu} mostly-customized-scrollbar`}>
             <li>
               <button className={styles.addButton} onClick={() => setIsModalOpen(true)}>
-                新增群組
+
+                {t("新增群組")}
               </button>
             </li>
             {groups.length > 0 ? (
@@ -126,15 +128,15 @@ const GroupManagementSidebar: React.FC<SidebarProps> = ({ onSelectGroup, groupId
                   className={`${styles.sidebartitle} ${activeGroup === group.id ? styles.active : ''}`}
                 >
                   <span onClick={() => handleGroupClick(group.id)}>
-                    {group.name}
+                    {t(group.name)}
                   </span>
                   <button className={styles.editButton} onClick={() => handleUpdateGroupName(group.id)}>
-                    <img src={editIcon} alt="" />
+                    <img src={t(editIcon)} alt={t("")} />
                   </button>
                 </li>
               ))
             ) : (
-              <li className={`${styles.noGroupMsg}`}>目前查無群組</li>
+              <li className={`${styles.noGroupMsg}`}>{t("目前查無群組")}</li>
             )}
           </ul>
         </div>
@@ -144,11 +146,11 @@ const GroupManagementSidebar: React.FC<SidebarProps> = ({ onSelectGroup, groupId
         <Modal
           onClose={() => setIsModalOpen(false)}
           onSubmit={handleAddGroup}
-          title="新增群組"
+          title={t("新增群組")}
           icon={newGroup}
           value={newGroupName}
           onChange={e => setNewGroupName(e.target.value)}
-          placeholder="請輸入群組名稱"
+          placeholder={t("請輸入群組名稱")}
         />
       )}
 
@@ -156,11 +158,11 @@ const GroupManagementSidebar: React.FC<SidebarProps> = ({ onSelectGroup, groupId
         <Modal
           onClose={() => setIsUpdateModalOpen(false)}
           onSubmit={handleConfirmUpdate}
-          title="編輯群組名稱"
+          title={t("編輯群組名稱")}
           icon={rename}
           value={updatedGroupName}
           onChange={e => setUpdatedGroupName(e.target.value)}
-          placeholder="請輸入新的群組名稱"
+          placeholder={t("請輸入新的群組名稱")}
         />
       )}
     </div>
@@ -183,21 +185,21 @@ const Modal: React.FC<ModalProps> = ({ onClose, onSubmit, title, icon, value, on
     <div className={styles.modal}>
       <div className={styles.modalContent}>
         <div className={styles.circleIcon}>
-          <img src={icon} className={styles.theIcon} alt="" />
+          <img src={t(icon)} className={styles.theIcon} alt={t("")} />
         </div>
-        <h2>{title}</h2>
+        <h2>{t(title)}</h2>
         <button onClick={onClose} className={styles.closeModal}>
-          <img src={closeX} alt="關閉" />
+          <img src={t(closeX)} alt={t("關閉")} />
         </button>
         <input
           type="text"
           value={value}
           onChange={onChange}
-          placeholder={placeholder}
+          placeholder={t(placeholder)}
         />
         <div>
           <button onClick={onSubmit} className={styles.modalSubmit}>
-            <span>確定</span>
+            <span>{t("確定")}</span>
           </button>
         </div>
       </div>

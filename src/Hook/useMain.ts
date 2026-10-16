@@ -1,3 +1,4 @@
+import { t } from "../demo/i18n";
 import { useState } from 'react';
 
 const useMain = () => {
@@ -17,7 +18,7 @@ const useMain = () => {
   };
 
   const deleteTab = (index: number) => {
-    if (window.confirm('確定要刪除嗎？')) {
+    if (window.confirm(t('確定要刪除嗎？'))) {
       const newTabs = [...tabs];
       newTabs.splice(index, 1);
       setTabs(newTabs);

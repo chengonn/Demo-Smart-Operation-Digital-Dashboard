@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useEffect, useState } from 'react';
 import styles from './PersonalData.module.css';
 import { useUserContext } from '../../context/UserContext';
@@ -153,7 +154,7 @@ const Pdata: React.FC = () => {
       <div className={styles.container}>
         <form className={`needs-validation ${styles.profileSide}`} noValidate>
           <div className={styles.legendContainer}>
-            <legend className={styles.legend}>您的個人資料</legend>
+            <legend className={styles.legend}>{t("您的個人資料")}</legend>
             <div className={styles.theButtonGroup}>
               <div className={styles.theEditButton}>
                 <button
@@ -161,7 +162,7 @@ const Pdata: React.FC = () => {
                   className={`btn ${styles.btn}`}
                   onClick={state.editable ? handleSaveClick : handleEditClick}
                 >
-                  {state.editable ? '保存變更' : '修改資料'}
+                  {t(state.editable ? '保存變更' : '修改資料')}
                 </button>
               </div>
               {!state.editable && (
@@ -171,7 +172,7 @@ const Pdata: React.FC = () => {
                     className="btn btn-outline-secondary"
                     onClick={handleLogoutClick}
                   >
-                    <span>登出</span>
+                    <span>{t("登出")}</span>
                   </button>
                 </div>
               )}
@@ -181,7 +182,8 @@ const Pdata: React.FC = () => {
           <div className="row">
             <div className="col-12">
               <label htmlFor="userName" className={styles.formLabel}>
-                姓名
+
+                {t("姓名")}
               </label>
               <input
                 type="text"
@@ -198,7 +200,8 @@ const Pdata: React.FC = () => {
           <div className="row">
             <div className="col-12">
               <label htmlFor="gmail" className={styles.formLabel}>
-                信箱 (Gmail)
+
+                {t("信箱 (Gmail)")}
               </label>
               <input
                 type="text"
@@ -215,7 +218,8 @@ const Pdata: React.FC = () => {
           <div className="row">
             <div className="col-12">
               <label htmlFor="departmentName" className={styles.formLabel}>
-                所屬部門
+
+                {t("所屬部門")}
               </label>
               <select
                 className="form-control"
@@ -224,10 +228,10 @@ const Pdata: React.FC = () => {
                 disabled={!state.editable}
                 onChange={(e) => handleInputChange('departmentName', e.target.value)}
               >
-                <option value="">選擇部門</option>
+                <option value="">{t("選擇部門")}</option>
                 {departments.map((department) => (
                   <option key={department.value} value={department.value}>
-                    {department.label}
+                    {t(department.label)}
                   </option>
                 ))}
               </select>
@@ -237,7 +241,8 @@ const Pdata: React.FC = () => {
           <div className="row">
             <div className="col-12">
               <label htmlFor="position" className={styles.formLabel}>
-                職位
+
+                {t("職位")}
               </label>
               <input
                 type="text"
@@ -254,7 +259,8 @@ const Pdata: React.FC = () => {
           <div className="row">
             <div className="col-12">
               <label htmlFor="identity" className={styles.formLabel}>
-                身份
+
+                {t("身份")}
               </label>
               <select
                 className="form-control"
@@ -265,7 +271,7 @@ const Pdata: React.FC = () => {
               >
                 {identities.map((identity) => (
                   <option key={identity.value} value={identity.value}>
-                    {identity.label}
+                    {t(identity.label)}
                   </option>
                 ))}
               </select>
@@ -285,4 +291,3 @@ const Pdata: React.FC = () => {
 };
 
 export default Pdata;
-

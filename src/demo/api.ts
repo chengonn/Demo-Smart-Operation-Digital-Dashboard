@@ -1,3 +1,4 @@
+import { t } from './i18n';
 import { AxiosAdapter } from 'axios';
 import { chartURL, chartPreview, chartSeries, chartUnit } from './chart';
 
@@ -127,7 +128,7 @@ export function demoRequest(rawURL: string, method = 'GET', body: any = {}, extr
     else { const row = find(store.tasks, id); if (row) Object.assign(row, data); if (verb === 'DELETE') store.tasks = store.tasks.filter(task => task !== row); result = ok(row); }
   } else if (path === '/export/export') {
     const chart = find(store.charts, params.chartId);
-    result = new Blob(['\uFEFF月份,指標,示範數值,單位\n' + chartSeries(Number(params.chartId)).map((value, i) => `${i + 1},${chart?.name || '示範指標'},${value},${chartUnit(Number(params.chartId))}`).join('\n')], { type: 'text/csv;charset=utf-8' });
+    result = new Blob(['\uFEFF' + ['月份', '指標', '示範數值', '單位'].map(t).join(',') + '\n' + chartSeries(Number(params.chartId)).map((value, i) => `${i + 1},${t(chart?.name || '示範指標')},${value},${t(chartUnit(Number(params.chartId)))}`).join('\n')], { type: 'text/csv;charset=utf-8' });
   } else if (path === '/mail/message') {
     const mail = find(store.mails, params.mailId || data.mailId);
     if (!mail) throw new Error('找不到示範交辦事項');

@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useEffect, useState } from 'react';
 import closearrow from '../../assets/icon/close-arrow.svg';
 import styles from './UserControlSidebar.module.css';
@@ -44,17 +45,17 @@ const Sidebar: React.FC = () => {
           )}
 
           <div className={styles.close} onClick={() => setIsActive(false)}>
-            <img src={closearrow} alt="Click to close sidebar" />
+            <img src={t(closearrow)} alt={t("Click to close sidebar")} />
           </div>
           <ul className={`${styles.sidebar_menu} mostly-customized-scrollbar`}>
             <li className={location.pathname === "/UserControl/userApply" ? styles.active : ''}>
               <Link to="/UserControl/userApply">
-                <div className={styles.title}>待審核清單</div>
+                <div className={styles.title}>{t("待審核清單")}</div>
               </Link>
             </li>
             <li className={location.pathname === "/UserControl/userStatus" ? styles.active : ''}>
               <Link to="/UserControl/userStatus">
-                <div className={styles.title}>使用者控制</div>
+                <div className={styles.title}>{t("使用者控制")}</div>
               </Link>
             </li>
           </ul>

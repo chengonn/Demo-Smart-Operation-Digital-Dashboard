@@ -102,3 +102,21 @@ test('previously saved demos receive new chart renderers without losing edits', 
   expect(html).toContain('aria-label="圖表類型"');
   expect(html).not.toContain('old-line-chart');
 });
+
+test('English CSV exports are localized while status values stay canonical', async () => {
+  const { setLanguage } = require('./i18n');
+  setLanguage('en');
+  const blob = request('/export/export', 'POST', {}, { chartId: 14 });
+  const csv = await new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(reader.error);
+    reader.readAsText(blob);
+  });
+  expect(csv).toContain('Month,Metric,Sample value,Unit');
+  expect(csv).toContain('Cost variance rate');
+  expect(request('/mail').data[0].status).toBe('交辦');
+  request('/mail/message/status/1', 'PATCH', {}, { status: 3 });
+  expect(request('/mail', 'GET', {}, { status: '3' }).data[0].status).toBe('已完成');
+  setLanguage('zh');
+});

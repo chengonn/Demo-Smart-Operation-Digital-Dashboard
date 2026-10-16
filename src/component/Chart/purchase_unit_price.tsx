@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -67,7 +68,7 @@ const PurchaseUnitPriceChart: React.FC<PurchaseUnitPriceChartProps> = ({ chartId
 
   return (
     <div className={styles.chartContainer}>
-      <div className={styles.chartHeader}>進貨單價</div>
+      <div className={styles.chartHeader}>{t("進貨單價")}</div>
       <Line
         data={chartData}
         options={{

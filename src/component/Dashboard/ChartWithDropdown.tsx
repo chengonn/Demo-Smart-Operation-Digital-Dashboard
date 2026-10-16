@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useEffect, useState } from 'react';
 import styles from './ChartWithDropdown.module.css';
 import { useChartWithDropdown } from '../../Hook/useChartWithDropdown';
@@ -92,7 +93,7 @@ const ChartWithDropdown: React.FC<ChartWithDropdownProps> = ({ children, exportD
         setUsers(userList);
       } catch (error) {
         console.error('Failed to fetch users:', error);
-        alert('Failed to fetch users. Please try again later.');
+        alert(t('Failed to fetch users. Please try again later.'));
       }
     };
     fetchUsers();
@@ -134,17 +135,17 @@ const ChartWithDropdown: React.FC<ChartWithDropdownProps> = ({ children, exportD
         setLoading(false);
       }
     } else {
-      alert('No Dashboard ID selected.');
+      alert(t('No Dashboard ID selected.'));
     }
   };
 
-  // 進階分析 
+  // 進階分析
   const advancedAnalysis = (
     <>
       <div className={styles.modalOverlay} onClick={() => setIsAdvancedAnalysisModalOpen(false)}></div>
       <div className={styles.modal}>
         <div className={styles.advancedAnalysisForm}>
-          <h2>進階分析</h2>
+          <h2>{t("進階分析")}</h2>
           {chartHTML ? (
             <div
               dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(chartHTML) }}
@@ -153,7 +154,7 @@ const ChartWithDropdown: React.FC<ChartWithDropdownProps> = ({ children, exportD
             <div className={`loadingMsg`}></div>
           )}
           <div className={styles.buttonGroup}>
-            <button onClick={() => setIsAdvancedAnalysisModalOpen(false)} className={styles.cancel}>關閉</button>
+            <button onClick={() => setIsAdvancedAnalysisModalOpen(false)} className={styles.cancel}>{t("關閉")}</button>
           </div>
         </div>
       </div>
@@ -165,15 +166,15 @@ const ChartWithDropdown: React.FC<ChartWithDropdownProps> = ({ children, exportD
       <div className={styles.modalOverlay} onClick={closeModal}></div>
       <div className={styles.modal}>
         {showNoPermissionMsg ? (
-          <p className={styles.noPermissionMsg}>您沒有權限交辦此圖表</p>
+          <p className={styles.noPermissionMsg}>{t("您沒有權限交辦此圖表")}</p>
         ) : (
           <form onSubmit={handleSubmit} className={styles.AssignForm}>
-            <h2>撰寫郵件交辦</h2>
+            <h2>{t("撰寫郵件交辦")}</h2>
             <div>
-              {responseMessage && <p className={styles.responseMessage}>{responseMessage}</p>}
+              {responseMessage && <p className={styles.responseMessage}>{t(responseMessage)}</p>}
             </div>
             <div className={styles.labelGroup}>
-              <label htmlFor='AssignFormTitle'>標題</label>
+              <label htmlFor='AssignFormTitle'>{t("標題")}</label>
               <input
                 id='AssignFormTitle'
                 type="text"
@@ -183,7 +184,7 @@ const ChartWithDropdown: React.FC<ChartWithDropdownProps> = ({ children, exportD
               />
             </div>
             <div className={styles.labelGroup}>
-              <label htmlFor='AssignFormPersonInCharge'>指定負責人</label>
+              <label htmlFor='AssignFormPersonInCharge'>{t("指定負責人")}</label>
               <div className={styles.select}>
                 <select
                   id='AssignFormPersonInCharge'
@@ -194,7 +195,7 @@ const ChartWithDropdown: React.FC<ChartWithDropdownProps> = ({ children, exportD
                   <option value="" className={styles.applyKpiGroupOption}></option>
                   {(users || []).map(user => (
                     <option key={user.userId} value={user.userId} className={styles.applyKpiGroupOption}>
-                      {user.userName}
+                      {t(user.userName)}
                     </option>
                   ))}
                 </select>
@@ -203,15 +204,15 @@ const ChartWithDropdown: React.FC<ChartWithDropdownProps> = ({ children, exportD
 
             <div className={`${styles.labelGroup} ${styles.lastlabelGroup} ${styles.noBorderBottom}`}>
               <textarea
-                placeholder="請輸入郵件內容..."
+                placeholder={t("請輸入郵件內容...")}
                 value={message}
                 onChange={e => setMessage(e.target.value)}
                 required
               />
             </div>
             <div className={styles.buttonGroup}>
-              <button type="button" onClick={closeModal} className={styles.cancel}>取消</button>
-              <button type="submit" className={styles.submit}>提交</button>
+              <button type="button" onClick={closeModal} className={styles.cancel}>{t("取消")}</button>
+              <button type="submit" className={styles.submit}>{t("提交")}</button>
             </div>
           </form>
         )}
@@ -267,11 +268,11 @@ const ChartWithDropdown: React.FC<ChartWithDropdownProps> = ({ children, exportD
             {isDropdownOpen && (
               <div className={styles.dropdownMenu}>
 
-               <button onClick={handleExportClick}>匯出</button>
+               <button onClick={handleExportClick}>{t("匯出")}</button>
 
-                <button onClick={handleDelegateClick}>交辦</button>
+                <button onClick={handleDelegateClick}>{t("交辦")}</button>
 
-                <button className={styles.lastButton} onClick={() => handleAdvancedAnalysisWrapper()}>進階分析</button>
+                <button className={styles.lastButton} onClick={() => handleAdvancedAnalysisWrapper()}>{t("進階分析")}</button>
 
               </div>
             )}
@@ -280,15 +281,16 @@ const ChartWithDropdown: React.FC<ChartWithDropdownProps> = ({ children, exportD
 
         {showNoPermissionMsg && (
           <div className={styles.alertMessage}>
-            您沒有權限可以操作此功能
+
+            {t("您沒有權限可以操作此功能")}
           </div>
         )}
 
-        {children}
+        {t(children)}
         {/* 交辦的表單 */}
-        {isModalOpen && canAssign && (ReactDOM.createPortal(AssignForm, document.getElementById('portal-root')!))}
+        {t(isModalOpen && canAssign && (ReactDOM.createPortal(AssignForm, document.getElementById('portal-root')!)))}
         {/* 進階分析 */}
-        {isAdvancedAnalysisModalOpen && (interactiveCharts.length > 0) && ReactDOM.createPortal(advancedAnalysis, document.getElementById('portal-root')!)}
+        {t(isAdvancedAnalysisModalOpen && (interactiveCharts.length > 0) && ReactDOM.createPortal(advancedAnalysis, document.getElementById('portal-root')!))}
       </div >
     </>
   );

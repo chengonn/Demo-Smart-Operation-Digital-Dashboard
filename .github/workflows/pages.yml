@@ -20,7 +20,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci --legacy-peer-deps
-      - run: npm test -- --watchAll=false --runInBand --testMatch '**/src/**/*.test.ts'
+      - run: npm test -- --watchAll=false --runInBand --testMatch '**/src/**/*.test.ts' '**/src/**/*.test.tsx'
       - run: npx tsc --noEmit
       - run: npm run build
         env:

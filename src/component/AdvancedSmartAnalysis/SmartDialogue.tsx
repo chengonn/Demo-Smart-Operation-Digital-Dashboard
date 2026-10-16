@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './SmartDialogue.module.css';
 import send from '../../assets/icon/send.png';
@@ -6,7 +7,7 @@ import ChartService from '../../services/ChartService';
 import ReactMarkdown from 'react-markdown';
 
 interface SmartDialogueProps {
-  aiAnalysisData: { id: number; content: string; generator: string }[]; 
+  aiAnalysisData: { id: number; content: string; generator: string }[];
   chartId: number;
   isLoading: boolean;
   aiAnalysisId: number | null;
@@ -62,12 +63,12 @@ const SmartDialogue: React.FC<SmartDialogueProps> = ({ aiAnalysisData, chartId, 
       setMessages((prev) => prev.filter((msg) => msg.content !== 'AI 建議正在生成中'));
     }
   }, [isLoading]);
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim()) {
       const userMessage = input;
-      const userMessageId = nextId; 
+      const userMessageId = nextId;
       setMessages((prev) => [
         ...prev,
         { id: userMessageId, role: 'user', content: userMessage },
@@ -111,7 +112,7 @@ const SmartDialogue: React.FC<SmartDialogueProps> = ({ aiAnalysisData, chartId, 
   };
 
   const handleDeleteAIAnalysis = async () => {
-    if (window.confirm('您確定要刪除 AI 分析紀錄嗎？')) {
+    if (window.confirm(t('您確定要刪除 AI 分析紀錄嗎？'))) {
       try {
         const response = await ChartService.deleteAIAnalysis(chartId);
         setMessages([]);
@@ -125,9 +126,9 @@ const SmartDialogue: React.FC<SmartDialogueProps> = ({ aiAnalysisData, chartId, 
   return (
     <div className={styles.smartDialogueContainer}>
       <div className={styles.SmartDialogueTitle}>
-        <div className={styles.title}>智慧分析對話框</div>
+        <div className={styles.title}>{t("智慧分析對話框")}</div>
         <button className={styles.clearButton} onClick={handleDeleteAIAnalysis}>
-          <img src={clear} alt="清空" />
+          <img src={t(clear)} alt={t("清空")} />
         </button>
       </div>
 
@@ -137,7 +138,7 @@ const SmartDialogue: React.FC<SmartDialogueProps> = ({ aiAnalysisData, chartId, 
             <div key={index} className={`${styles.message} ${styles[msg.role]}`}>
               <div className={styles.messageContent}>
                 {msg.role === 'ai' ? (
-                  <ReactMarkdown>{typeof msg.content === 'string' ? msg.content : JSON.stringify(msg.content)}</ReactMarkdown>
+                  <ReactMarkdown>{t(typeof msg.content === 'string' ? msg.content : JSON.stringify(msg.content))}</ReactMarkdown>
                 ) : (
                   msg.content
                 )}
@@ -152,11 +153,11 @@ const SmartDialogue: React.FC<SmartDialogueProps> = ({ aiAnalysisData, chartId, 
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="請輸入您的問題"
+          placeholder={t("請輸入您的問題")}
           className={styles.input}
         />
         <button type="submit" className={styles.button}>
-          <img src={send} alt="傳送" className={styles.sendIcon} />
+          <img src={t(send)} alt={t("傳送")} className={styles.sendIcon} />
         </button>
       </form>
     </div>

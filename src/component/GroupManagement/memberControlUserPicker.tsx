@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useState, useEffect } from 'react';
 import {
   Dialog,
@@ -220,16 +221,16 @@ const UserPickerDialog: React.FC<UserPickerDialogProps> = ({
         root: classes.muiDialogroot,
       }}
     >
-      <DialogTitle className={classes.dialogTitle}>選擇</DialogTitle>
+      <DialogTitle className={classes.dialogTitle}>{t("選擇")}</DialogTitle>
       <DialogContent className={classes.dialogContent}>
-        <div style={{ margin: '10px 0', color: 'grey' }}>已選用戶</div>
+        <div style={{ margin: '10px 0', color: 'grey' }}>{t("已選用戶")}</div>
         <div>
           {currentSelectedIds.map(id => {
             const user = localUsers.find(user => user.userId === id);
             return user ? (
               <Chip
                 key={user.userId}
-                label={`${user.userName} ${user.userId}`}
+                label={t(`${user.userName} ${user.userId}`)}
                 onDelete={() => handleDelete(user.userId)}
                 className={classes.chip}
                 variant="outlined"
@@ -238,14 +239,14 @@ const UserPickerDialog: React.FC<UserPickerDialogProps> = ({
           })}
         </div>
         <TextField
-          placeholder="輸入以快速搜尋"
+          placeholder={t("輸入以快速搜尋")}
           variant="outlined"
           fullWidth
           className={classes.textField}
           value={searchText}
           onChange={handleSearchChange}
         />
-        <div style={{ margin: '10px 0', color: 'grey' }}>可選用戶</div>
+        <div style={{ margin: '10px 0', color: 'grey' }}>{t("可選用戶")}</div>
         <div>
           {paginatedUsers.map(user => (
             <div key={user.userId}>
@@ -254,14 +255,14 @@ const UserPickerDialog: React.FC<UserPickerDialogProps> = ({
                 onChange={() => handleToggleUser(user)}
                 style={{ color: 'white' }}
               />
-              <span style={{ color: 'white' }}>{user.userName}</span>
+              <span style={{ color: 'white' }}>{t(user.userName)}</span>
             </div>
           ))}
         </div>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} className={classes.cancel}>取消</Button>
-        <Button onClick={handleSubmit} className={classes.submit}>確認</Button>
+        <Button onClick={onClose} className={classes.cancel}>{t("取消")}</Button>
+        <Button onClick={handleSubmit} className={classes.submit}>{t("確認")}</Button>
       </DialogActions>
       <div className={classes.pagination}>
         <IconButton
@@ -271,7 +272,7 @@ const UserPickerDialog: React.FC<UserPickerDialogProps> = ({
         >
           <ChevronLeftIcon />
         </IconButton>
-        <Typography className={classes.pageIndicator}>{currentPage}</Typography>
+        <Typography className={classes.pageIndicator}>{t(currentPage)}</Typography>
         <IconButton
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}

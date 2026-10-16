@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Button, Snackbar, Alert } from '@mui/material';
@@ -112,7 +113,7 @@ const UserApplyTable: React.FC = () => {
 
   return (
     <>
-      <div className={styles.tableTitle}>待審核帳號列表</div>
+      <div className={styles.tableTitle}>{t("待審核帳號列表")}</div>
       <div id="scrollableDiv" className={styles.thePermissionList}>
         {loading ? (
           <div className={`loadingMsg`}></div>
@@ -124,7 +125,7 @@ const UserApplyTable: React.FC = () => {
             next={fetchMoreData}
             hasMore={hasMore}
             loader={<div className={`loadingMsg`}></div>}
-            endMessage={!error && users.length > 0 && <p className={styles.endMsg}>沒有更多了</p>}
+            endMessage={!error && users.length > 0 && <p className={styles.endMsg}>{t("沒有更多了")}</p>}
             scrollableTarget="scrollableDiv"
           >
             <div className={styles.theTable}>
@@ -133,23 +134,23 @@ const UserApplyTable: React.FC = () => {
                 <table>
                   <thead>
                     <tr>
-                      <th>申請人</th>
-                      <th>員工編號</th>
-                      <th>所屬部門</th>
-                      <th>信箱</th>
-                      <th>操作</th>
+                      <th>{t("申請人")}</th>
+                      <th>{t("員工編號")}</th>
+                      <th>{t("所屬部門")}</th>
+                      <th>{t("信箱")}</th>
+                      <th>{t("操作")}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {users.map((user, index) => (
                       <tr key={user.userId}>
-                        <td>{user.userName}</td>
-                        <td>{user.userId}</td>
-                        <td>{user.departmentName}</td>
-                        <td>{user.email}</td>
+                        <td>{t(user.userName)}</td>
+                        <td>{t(user.userId)}</td>
+                        <td>{t(user.departmentName)}</td>
+                        <td>{t(user.email)}</td>
                         <td>
-                          <button className={styles.approveButton} onClick={() => admitUserHandler(index)}>開通</button>
-                          <button className={styles.disapproveButton} onClick={() => removeUserHandler(index)}>刪除</button>
+                          <button className={styles.approveButton} onClick={() => admitUserHandler(index)}>{t("開通")}</button>
+                          <button className={styles.disapproveButton} onClick={() => removeUserHandler(index)}>{t("刪除")}</button>
                         </td>
                       </tr>
                     ))}
@@ -209,7 +210,7 @@ const UserApplyTable: React.FC = () => {
 
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <ErrorIcon style={{ marginRight: '12px', color: 'black', verticalAlign: 'middle' }} />
-            <span style={{ verticalAlign: 'middle', fontSize: '1.2rem' }}>{error}</span>
+            <span style={{ verticalAlign: 'middle', fontSize: '1.2rem' }}>{t(error)}</span>
           </div>
 
           <Button
@@ -231,7 +232,8 @@ const UserApplyTable: React.FC = () => {
               marginTop: '12px',
             }}
           >
-            重新嘗試
+
+            {t("重新嘗試")}
           </Button>
         </Alert>
       </Snackbar>

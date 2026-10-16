@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useState, useEffect, useMemo } from 'react';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -234,7 +235,7 @@ const UserStatusControl: React.FC = () => {
   const toggleStatus = async (index: number) => {
     const user = users[index];
 
-    const confirmChange = window.confirm(`確定要將 ${user.name} 的狀態切換為 ${user.status === '啟用中' ? '停用' : '啟用中'} 嗎？`);
+    const confirmChange = window.confirm(t(`確定要將 ${user.name} 的狀態切換為 ${user.status === '啟用中' ? '停用' : '啟用中'} 嗎？`));
 
     if (!confirmChange) {
       return;
@@ -320,17 +321,17 @@ const UserStatusControl: React.FC = () => {
       <div className={styles.tableFilters}>
 
         <select onChange={handleDepartmentFilterChange} value={departmentFilter}>
-          <option value="all">部門：全部</option>
+          <option value="all">{t("部門：全部")}</option>
           {departments.map(department => (
             <option value={department.value} >
-              {department.label}
+              {t(department.label)}
             </option>
           ))}
         </select>
 
         <input
           type="search"
-          placeholder="搜尋"
+          placeholder={t("搜尋")}
           className={styles.searchInput}
           value={searchKeyword}
           onChange={handleSearchChange}
@@ -348,7 +349,7 @@ const UserStatusControl: React.FC = () => {
 
         loader={<div className={`loadingMsg`}></div>}
 
-        endMessage={<p className={styles.endMsg}>沒有更多用戶</p>}
+        endMessage={<p className={styles.endMsg}>{t("沒有更多用戶")}</p>}
 
         scrollableTarget="scrollableDiv"
 
@@ -360,17 +361,17 @@ const UserStatusControl: React.FC = () => {
 
             <tr>
 
-              <th>姓名</th>
+              <th>{t("姓名")}</th>
 
-              <th>工號</th>
+              <th>{t("工號")}</th>
 
-              <th>所屬部門</th>
+              <th>{t("所屬部門")}</th>
 
-              <th>電子郵箱</th>
+              <th>{t("電子郵箱")}</th>
 
-              <th>職稱</th>
+              <th>{t("職稱")}</th>
 
-              <th>狀態</th>
+              <th>{t("狀態")}</th>
 
             </tr>
 
@@ -382,15 +383,15 @@ const UserStatusControl: React.FC = () => {
 
               <tr key={index}>
 
-                <td>{user.name}</td>
+                <td>{t(user.name)}</td>
 
-                <td>{user.id}</td>
+                <td>{t(user.id)}</td>
 
-                <td>{user.department}</td>
+                <td>{t(user.department)}</td>
 
-                <td>{user.email}</td>
+                <td>{t(user.email)}</td>
 
-                <td>{user.position}</td>
+                <td>{t(user.position)}</td>
 
                 <td>
 

@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import closearrow from '../../assets/icon/close-arrow.svg';
@@ -56,13 +57,13 @@ const Sidebar: React.FC<SidebarProps> = ({ onStatusChange, selectedStatus }) => 
             disabled={isDisabled}
           ></button>
           <div className={styles.close} onClick={() => setIsActive(false)}>
-            <img src={closearrow} alt="Click to close sidebar" />
+            <img src={t(closearrow)} alt={t("Click to close sidebar")} />
           </div>
           <ul className={`${styles.siderbar_menu} mostly-customized-scrollbar`}>
             {Object.keys(statusMap).map(status => (
               <li key={status} className={selectedStatus === status ? styles.active : ''}>
               <Link to={`/InterimKPIControl/${status}`} onClick={() => handleMenuItemClick(status)}>
-                <div className={styles.title}>{status}</div>
+                <div className={styles.title}>{t(status)}</div>
               </Link>
             </li>
             ))}

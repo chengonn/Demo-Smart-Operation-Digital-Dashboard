@@ -1,3 +1,4 @@
+import { t } from "../../../demo/i18n";
 import React, { useState } from 'react';
 import styles from './mailBreif.module.css';
 import MailItem from "./MailItem";

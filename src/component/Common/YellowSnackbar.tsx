@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React from 'react';
 import { Snackbar, Alert, AlertProps, Button, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -62,7 +63,7 @@ const YellowSnackbar: React.FC<YellowSnackbarProps> = ({
 
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <ErrorIcon style={{ marginRight: '12px', color: 'black', verticalAlign: 'middle' }} />
-          <span style={{ verticalAlign: 'middle', fontSize: '1.2rem' }}>{message}</span>
+          <span style={{ verticalAlign: 'middle', fontSize: '1.2rem' }}>{t(message)}</span>
         </div>
 
         {onRetry && (
@@ -85,7 +86,8 @@ const YellowSnackbar: React.FC<YellowSnackbarProps> = ({
               marginTop: '12px',
             }}
           >
-            重新嘗試
+
+            {t("重新嘗試")}
           </Button>
         )}
       </Alert>

@@ -1,3 +1,4 @@
+import { t, getLocale } from "../../demo/i18n";
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -10,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import 'chartjs-adapter-date-fns'; 
+import 'chartjs-adapter-date-fns';
 import ChartService from '../../services/ChartService';
 import styles from './time_efficiency.module.css';
 
@@ -67,7 +68,7 @@ const TimeEfficiencyChart: React.FC<TimeEfficiencyChartProps> = ({ chartId }) =>
 
   return (
     <div className={styles.chartContainer}>
-      <div className={styles.chartHeader}>工時效率</div>
+      <div className={styles.chartHeader}>{t("工時效率")}</div>
       <Line
         data={chartData}
         options={{
@@ -93,7 +94,7 @@ const TimeEfficiencyChart: React.FC<TimeEfficiencyChartProps> = ({ chartId }) =>
                 display: true, // 顯示 x 軸上的刻度
                 callback: function(value: any) {
                   // 格式化日期顯示
-                  return new Date(value).toLocaleDateString(); // 自訂日期格式
+                  return new Date(value).toLocaleDateString(getLocale()); // 自訂日期格式
                 },
               },
             },

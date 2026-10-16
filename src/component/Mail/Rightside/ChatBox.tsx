@@ -1,3 +1,4 @@
+import { t, getLocale } from "../../../demo/i18n";
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styles from './chatBox.module.css';
 import { Email, EmailMessage, getEmailDetails } from '../../../services/mailService';
@@ -97,20 +98,20 @@ const ChatBox: React.FC<ChatBoxProps> = ({ emailId, emailName, sendNewChatMessag
     const messageDate = new Date(createDate);
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
-    const formattedTime = messageDate.toLocaleTimeString(undefined, {
+    const formattedTime = messageDate.toLocaleTimeString(getLocale(), {
       hour: '2-digit',
       minute: '2-digit',
       hour12: false,
     });
 
-    const isToday = messageDate.toLocaleDateString() === currentDate.toLocaleDateString();
+    const isToday = messageDate.toLocaleDateString(getLocale()) === currentDate.toLocaleDateString(getLocale());
     const isCurrentYear = messageDate.getFullYear() === currentYear;
 
     if (!isToday) {
       if (!isCurrentYear) {
-        return `${messageDate.toLocaleDateString()} ${formattedTime}`;
+        return `${messageDate.toLocaleDateString(getLocale())} ${formattedTime}`;
       }
-      return `${messageDate.toLocaleDateString(undefined, {
+      return `${messageDate.toLocaleDateString(getLocale(), {
         month: '2-digit',
         day: '2-digit',
       })} ${formattedTime}`;
@@ -122,36 +123,36 @@ const ChatBox: React.FC<ChatBoxProps> = ({ emailId, emailName, sendNewChatMessag
   return (
     <div className={styles.chatContainer}>
       <div className={styles.mailTitle}>
-        {emailName && <h2 className={styles.theTitle}>{emailName}</h2>}
+        {emailName && <h2 className={styles.theTitle}>{t(emailName)}</h2>}
       </div>
 
       <div className={styles.chatBox}>
         {messages.length > 0 ? (
           messages.map((message, index) => {
-            const messageDate = new Date(message.createDate).toLocaleDateString();
-            const isToday = messageDate === new Date().toLocaleDateString();
+            const messageDate = new Date(message.createDate).toLocaleDateString(getLocale());
+            const isToday = messageDate === new Date().toLocaleDateString(getLocale());
 
             const isFirstTodayMessage =
               isToday &&
-              (index === 0 || new Date(messages[index - 1].createDate).toLocaleDateString() !== messageDate);
+              (index === 0 || new Date(messages[index - 1].createDate).toLocaleDateString(getLocale()) !== messageDate);
 
             return (
               <>
-                {isFirstTodayMessage && <div className={styles.todayMsg}>今天</div>}
+                {isFirstTodayMessage && <div className={styles.todayMsg}>{t("今天")}</div>}
                 <div key={message.messageId} className={`${styles.chatMessage} ${user?.id === message.createId ? styles.myMessage : ''}`}>
                   <div className={styles.messageContent}>
                     {user?.id !== message.createId && (
-                      <span className={styles.sender}>{message.createId}</span>
+                      <span className={styles.sender}>{t(message.createId)}</span>
                     )}
-                    <span className={styles.content}>{message.content}</span>
+                    <span className={styles.content}>{t(message.content)}</span>
                   </div>
-                  <span className={styles.timestamp}>{resetTimestamp(message.createDate)}</span>
+                  <span className={styles.timestamp}>{t(resetTimestamp(message.createDate))}</span>
                 </div>
               </>
             );
           })
         ) : (
-          <p className={styles.emptyAlert}>尚無訊息</p>
+          <p className={styles.emptyAlert}>{t("尚無訊息")}</p>
         )}
         <div ref={messagesEndRef} />
       </div>
@@ -162,14 +163,14 @@ const ChatBox: React.FC<ChatBoxProps> = ({ emailId, emailName, sendNewChatMessag
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyPress={handleKeyPress}
-          placeholder="輸入你的内容..."
+          placeholder={t("輸入你的内容...")}
         />
         <button
           className={styles.sendButton}
           onClick={handleSendMessage}
           disabled={isSending}
         >
-          <img src={sendIcon} className={styles.sendIcon} alt="發送" />
+          <img src={t(sendIcon)} className={styles.sendIcon} alt={t("發送")} />
         </button>
       </div>
     </div>

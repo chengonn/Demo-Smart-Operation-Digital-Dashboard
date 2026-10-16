@@ -1,3 +1,4 @@
+import { t } from "../../../demo/i18n";
 import React from 'react';
 import styles from "./filter.module.css";
 
@@ -18,7 +19,7 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setSelectedStatus(value);
-    onFilterChange([value]); 
+    onFilterChange([value]);
   };
 
 
@@ -34,7 +35,7 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
             checked={selectedStatus === statusCode}
             onChange={handleRadioChange}
           />
-          <label htmlFor={statusCode}>{label}</label>
+          <label htmlFor={statusCode}>{t(label)}</label>
         </div>
       ))}
     </div>

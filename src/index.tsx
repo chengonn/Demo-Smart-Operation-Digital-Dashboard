@@ -1,3 +1,4 @@
+import LanguageProvider, { useLanguage } from './demo/LanguageProvider';
 import DemoBanner from './demo/DemoBanner';
 // src/index.tsx
 import React from 'react';
@@ -13,7 +14,9 @@ import AwaitingApproval from './pages/ProfileSetup/AwaitingApproval';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
-root.render(
+function DemoApp() {
+  useLanguage();
+  return (
   <UserProvider>
     <ChartProvider>
       <Router><DemoBanner />
@@ -28,3 +31,5 @@ root.render(
     </ChartProvider>
   </UserProvider>
 );
+}
+root.render(<LanguageProvider><DemoApp /></LanguageProvider>);

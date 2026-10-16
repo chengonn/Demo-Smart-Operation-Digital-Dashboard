@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useState, useEffect } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
@@ -56,31 +57,33 @@ const UserPickerDialog: React.FC<{
   return (
     <Dialog open={open} onClose={onClose} style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} classes={{ paper: classes.dialogPaper }}>
       <DialogTitle style={{ color: 'black', fontSize: '1.5rem', fontWeight: 'bold', width: 'auto', padding: '10px 24px 0px 24px' }}>
-        匯出資料權限設置
+
+        {t("匯出資料權限設置")}
       </DialogTitle>
       <DialogContent style={{ paddingTop: '15px' }}>
         <Autocomplete
           multiple
           options={users}
-          getOptionLabel={(option) => `${option.userId} ${option.userName}`}
+          getOptionLabel={(option) => t(`${option.userId} ${option.userName}`)}
           onChange={(event, newValue) => {
             setSelectedUsers(newValue as User[]);
           }}
           value={selectedUsers}
           renderOption={(props, option) => (
             <li {...props}>
-              {option.userId} {option.userName}
+              {t(option.userId)} {t(option.userName)}
             </li>
           )}
           renderInput={(params) => (
-            <TextField {...params} variant="outlined" label="選擇用戶" placeholder="或輸入文字以查找..." />
+            <TextField {...params} variant="outlined" label={t("選擇用戶")} placeholder={t("或輸入文字以查找...")} />
           )}
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>取消</Button>
+        <Button onClick={onClose}>{t("取消")}</Button>
         <Button onClick={handleSubmit} color="primary">
-          確認
+
+          {t("確認")}
         </Button>
       </DialogActions>
     </Dialog>
@@ -103,18 +106,18 @@ const ExportControl: React.FC = () => {
           const userList: User[] = userData.map((user) => ({
             ...user,
             id: user.userId,
-            available: Boolean(user.available), 
+            available: Boolean(user.available),
           }));
           setUsers(userList);
         } else {
           console.error('fetchAllUsers 返回的數據不是數組：', userData);
           setUsers([]);
         }
-    
+
         const chartResponse = await fetchAllCharts();
         if (chartResponse.data) {
           setCharts(chartResponse.data);
-    
+
           const permissionsMap: { [key: number]: string[] } = {};
           const userNamesMap: { [key: number]: string[] } = {}; // New map to store names
           for (const chart of chartResponse.data) {
@@ -136,7 +139,7 @@ const ExportControl: React.FC = () => {
       } catch (error) {
         console.error('Error fetching data', error);
       }
-    };    
+    };
 
     fetchData();
   }, []);
@@ -152,18 +155,18 @@ const ExportControl: React.FC = () => {
 
   const handleSubmit = (selectedUsers: User[]) => {
     const selectedUserIds = selectedUsers.map(user => user.id);
-  
+
     setSelectedUsersMap(prev => ({
       ...prev,
       [currentChart]: selectedUserIds,
     }));
-  
+
     const listDTO = {
       sponsorList: [],
       exporterList: selectedUserIds, // Use the selected user IDs here
       dashboardCharts: [],
     };
-  
+
     setExportPermission(currentChart, listDTO)
       .then((response) => {
         console.log('成功提交:', response.message);
@@ -171,14 +174,14 @@ const ExportControl: React.FC = () => {
       .catch((error) => {
         console.error('提交失败', error);
       });
-  
+
     setDialogOpen(false);
-  };  
+  };
 
   const getSelectedUserNames = (chartId: number) => {
     const selectedUserNames = userNamesMap[chartId] || [];
     const count = selectedUserNames.length;
-    return count > 0 
+    return count > 0
       ? `擁有權限者：${selectedUserNames.join(', ')}` // Show names instead of just count
       : '設置匯出權限';
   };
@@ -190,17 +193,17 @@ const ExportControl: React.FC = () => {
           <table className="custom-scrollbar">
             <thead>
               <tr>
-                <th>圖表名稱</th>
-                <th>匯出資料權限設置</th>
+                <th>{t("圖表名稱")}</th>
+                <th>{t("匯出資料權限設置")}</th>
               </tr>
             </thead>
             <tbody>
               {charts.map((chart) => (
                 <tr key={chart.id}>
-                  <td>{chart.name}</td>
+                  <td>{t(chart.name)}</td>
                   <td>
                     <Button variant="contained" color="primary" onClick={() => handleOpenDialog(chart.id)}>
-                      {getSelectedUserNames(chart.id)}
+                      {t(getSelectedUserNames(chart.id))}
                     </Button>
                   </td>
                 </tr>

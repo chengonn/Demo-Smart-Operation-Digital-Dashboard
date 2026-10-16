@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -66,7 +67,7 @@ const RefundRateChart: React.FC<RefundRateChartProps> = ({ chartId }) => {
 
   return (
     <div className={styles.chartContainer}>
-      <div className={styles.chartHeader}>退貨率</div>
+      <div className={styles.chartHeader}>{t("退貨率")}</div>
       <Line
         data={chartData}
         options={{

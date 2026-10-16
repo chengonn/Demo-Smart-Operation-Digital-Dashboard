@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useState, useEffect } from 'react';
 import styles from './ChartAdminTable.module.css';
 import { Snackbar, Button, Alert, IconButton, MenuItem } from '@mui/material';
@@ -154,7 +155,7 @@ const ChartAdminTable: React.FC = () => {
 
   const handleToggle = async (chartId: number, currentStatus: boolean) => {
     const newStatus = !currentStatus;
-    const userConfirmed = window.confirm(`確定要${newStatus ? '啟用' : '停用'}這個功能嗎？`);
+    const userConfirmed = window.confirm(t(`確定要${newStatus ? '啟用' : '停用'}這個功能嗎？`));
     if (userConfirmed) {
       try {
         await ChartService.updateChartAvailability(chartId, newStatus);
@@ -184,7 +185,7 @@ const ChartAdminTable: React.FC = () => {
             onClick={handleMenuItemClick}
             className={styles.theAccordion}
           >
-            <div className={`${styles.title}`}>{selectedStatus}</div>
+            <div className={`${styles.title}`}>{t(selectedStatus)}</div>
             <div className={styles.theArrowIcon}>
               {openStatus ? <ExpandLess /> : <ExpandMore />}
             </div>
@@ -203,7 +204,7 @@ const ChartAdminTable: React.FC = () => {
                         : styles.theStatuses
                     }
                   >
-                    {status}
+                    {t(status)}
                   </li>
                 ))}
               </ul>
@@ -212,7 +213,8 @@ const ChartAdminTable: React.FC = () => {
         </div>
 
         <button className={`${styles.addKPIButton} ${styles.notVisable}`} onClick={handleOpenForm}>
-          新增圖表
+
+          {t("新增圖表")}
         </button>
       </div>
 
@@ -221,14 +223,14 @@ const ChartAdminTable: React.FC = () => {
           <table className="custom-scrollbar">
             <thead className={styles.theTitle}>
               <tr>
-                <th>圖表</th>
-                <th>狀態</th>
+                <th>{t("圖表")}</th>
+                <th>{t("狀態")}</th>
               </tr>
             </thead>
             <tbody>
               {charts.map((chart) => (
                 <tr key={chart.id}>
-                  <td>{chart.name}</td>
+                  <td>{t(chart.name)}</td>
                   <td>
                     <div className={styles.theToggle}>
                       <FormControlLabel
@@ -252,7 +254,7 @@ const ChartAdminTable: React.FC = () => {
                       }}
                     >
                       查看
-                    </MenuItem> 
+                    </MenuItem>
                   </td> */}
                 </tr>
               ))}
@@ -264,7 +266,7 @@ const ChartAdminTable: React.FC = () => {
       {/* {isFormOpen && (
         <NewChartForm onSubmit={handleFormSubmit} onClose={handleCloseForm} />
       )} */}
-      {/* 
+      {/*
       {isViewFormOpen && (
         <ViewChartForm
           chartId={viewFormData.chartId}
@@ -314,7 +316,7 @@ const ChartAdminTable: React.FC = () => {
 
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <ErrorIcon style={{ marginRight: '12px', color: 'black', verticalAlign: 'middle' }} />
-            <span style={{ verticalAlign: 'middle', fontSize: '1.2rem' }}>{error}</span>
+            <span style={{ verticalAlign: 'middle', fontSize: '1.2rem' }}>{t(error)}</span>
           </div>
 
           <Button
@@ -336,7 +338,8 @@ const ChartAdminTable: React.FC = () => {
               marginTop: '12px',
             }}
           >
-            重新嘗試
+
+            {t("重新嘗試")}
           </Button>
         </Alert>
       </Snackbar>

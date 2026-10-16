@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 //src\pages\ProfileSetup\ProfileSetup.tsx
 import React, { useEffect, useState } from 'react';
 import styles from './ProfileSetup.module.css';
@@ -96,15 +97,15 @@ const ProfileSetup: React.FC = () => {
     <div className={styles.profileSetupBody}>
       <div className={styles.container}>
         <div className={styles.formHeader}>
-          <img src={logo} alt="Logo" className={styles.logo} />
-          <h1>填寫資料以完成註冊</h1>
+          <img src={t(logo)} alt={t("Logo")} className={styles.logo} />
+          <h1>{t("填寫資料以完成註冊")}</h1>
         </div>
         <form onSubmit={handleSubmit} className={styles.setupForm}>
-          
-          {error && <div className={styles.errorMsg}>{error}</div>}
+
+          {error && <div className={styles.errorMsg}>{t(error)}</div>}
 
           <div className={styles.formGroup}>
-            <label htmlFor="name">姓名</label>
+            <label htmlFor="name">{t("姓名")}</label>
             <input
               type="text"
               id="name"
@@ -115,7 +116,7 @@ const ProfileSetup: React.FC = () => {
             />
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="jobNumber">員工編號</label>
+            <label htmlFor="jobNumber">{t("員工編號")}</label>
             <input
               type="text"
               id="jobNumber"
@@ -126,7 +127,7 @@ const ProfileSetup: React.FC = () => {
             />
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="department">所屬部門</label>
+            <label htmlFor="department">{t("所屬部門")}</label>
             <div className={styles.select}>
               <select
                 id="department"
@@ -135,17 +136,17 @@ const ProfileSetup: React.FC = () => {
                 value={formData.department}
                 onChange={handleChange}
               >
-                <option value="">選擇您的部門</option>
+                <option value="">{t("選擇您的部門")}</option>
                 {departments.map((dept) => (
                   <option key={dept.value} value={dept.value}>
-                    {dept.label}
+                    {t(dept.label)}
                   </option>
                 ))}
               </select>
             </div>
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="jobTitle">職位</label>
+            <label htmlFor="jobTitle">{t("職位")}</label>
             <input
               type="text"
               id="jobTitle"
@@ -155,7 +156,7 @@ const ProfileSetup: React.FC = () => {
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className={styles.setupSubmit}>提交</button>
+          <button type="submit" className={styles.setupSubmit}>{t("提交")}</button>
         </form>
       </div>
     </div>

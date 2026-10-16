@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
@@ -54,7 +55,7 @@ const YieldAchievementRateChart: React.FC<YieldAchievementRateChartProps> = ({ c
 
   return (
     <div className={styles.chartContainer}>
-      <div className={styles.chartHeader}>產量達成率</div>
+      <div className={styles.chartHeader}>{t("產量達成率")}</div>
       <Bar
         data={chartData}
         options={{

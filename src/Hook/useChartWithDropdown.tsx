@@ -1,3 +1,4 @@
+import { t } from "../demo/i18n";
 // src/Hook/useChartWithDropdown.tsx
 import { useState, useEffect } from 'react';
 import ChartService from '../services/ChartService';
@@ -69,13 +70,13 @@ export function useChartWithDropdown(
         console.warn('No dashboardId available to fetch charts.');
       }
     };
-  
+
     fetchCharts(); // Initial fetch
-  
+
     const intervalId = setInterval(() => {
       fetchCharts();
     }, 10 * 60 * 1000); // Every 10 minutes
-  
+
     return () => clearInterval(intervalId); // Clear interval on unmount
   }, [selectedDashboardId]); // Dependency array includes selectedDashboardId
 
@@ -165,7 +166,7 @@ export function useChartWithDropdown(
     try {
       const result = await exportData(chartId, requestData);
       if (!result.result) {
-        alert(`導出失敗: ${result.message}`); // Use message instead of errorCode
+        alert(t(`導出失敗: ${result.message}`)); // Use message instead of errorCode
       } else {
         // Handle successful export, e.g., trigger file download
       }
@@ -197,7 +198,7 @@ export function useChartWithDropdown(
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!chartId) {
-      alert('請先選擇一個圖表。');
+      alert(t('請先選擇一個圖表。'));
       return;
     }
 
@@ -230,16 +231,16 @@ export function useChartWithDropdown(
         // 设置响应消息
         setResponseMessage(createdEmail.message || null); // 假设 createdEmail.message 是响应中的消息
         setIsModalOpen(false);
-        closeModal(); 
+        closeModal();
       } else {
         throw new Error('創建郵件失敗，且無法取得錯誤訊息。');
       }
     } catch (error: any) {
       console.error('提交委派任務時出錯:', error);
       if (error?.response?.data?.message) {
-        alert(`交辦失敗: ${error.response.data.message}`);
+        alert(t(`交辦失敗: ${error.response.data.message}`));
       } else {
-        alert('交辦發送成功');
+        alert(t('交辦發送成功'));
         setIsModalOpen(false);
       }
     }
@@ -253,11 +254,11 @@ export function useChartWithDropdown(
         return response.data;
       } else {
         console.error('Failed to fetch chart data:', response.message);
-        alert('Failed to fetch chart data. Please try again later.');
+        alert(t('Failed to fetch chart data. Please try again later.'));
       }
     } catch (error) {
       console.error('Error fetching chart data:', error);
-      alert('Error fetching chart data. Please try again later.');
+      alert(t('Error fetching chart data. Please try again later.'));
     }
     return null;
   };
@@ -277,50 +278,50 @@ export function useChartWithDropdown(
         // 確保使用 ChartWithDropdown 中的正確 chartId
         const url = `${window.location.pathname}#/advanced-analysis?dashboardId=${dashboardId}&chartId=${chartId}`;
         window.open(url, '_blank');
-        console.log('Navigating to:', url); 
+        console.log('Navigating to:', url);
       } else {
         console.error('無法獲取儀表板圖表:', dashboardChartsResponse.message);
-        alert('無法獲取儀表板圖表。請稍後再試。');
+        alert(t('無法獲取儀表板圖表。請稍後再試。'));
       }
     } catch (error) {
       console.error('進行進階分析時發生錯誤:', error);
-      alert('進行進階分析時發生錯誤。請稍後再試。');
+      alert(t('進行進階分析時發生錯誤。請稍後再試。'));
     }
   };
 
   const handleAIAnalysis = async (dashboardId: number, chartId: number) => {
     if (!dashboardId) {
-      alert('Dashboard ID is undefined.');
+      alert(t('Dashboard ID is undefined.'));
       return;
     }
-  
+
     setLoading(true); // Set loading to true when operation starts
     try {
       const dashboardChartsResponse = await ChartService.getDashboardCharts(dashboardId);
-  
+
       if (dashboardChartsResponse.result && Array.isArray(dashboardChartsResponse.data)) {
         // 使用传入的 chartId 进行分析
         const aiResponse = await ChartService.getAIAnalysis(chartId, dashboardId);
-  
+
         if (aiResponse.result) {
           const suggestionText = aiResponse.data.suggestion;
           const sanitizedSuggestion = sanitizeText(suggestionText);
           setAiSuggestion(sanitizedSuggestion); // Save the suggestion text to state
           setShowAIAnalysisModal(true); // Show the modal
         } else {
-          alert(`Failed to get AI analysis: ${aiResponse.message}`);
+          alert(t(`Failed to get AI analysis: ${aiResponse.message}`));
         }
       } else {
         console.error('Failed to fetch dashboard charts:', dashboardChartsResponse.message);
-        alert('Failed to fetch dashboard charts. Please try again later.');
+        alert(t('Failed to fetch dashboard charts. Please try again later.'));
       }
     } catch (error) {
       console.error('Failed to get AI analysis:', error);
-      alert('Error during AI analysis. Please try again later.');
+      alert(t('Error during AI analysis. Please try again later.'));
     } finally {
       setLoading(false); // Set loading to false after operation
     }
-  };  
+  };
 
   const sanitizeText = (text: string): string => {
     return text.replace(/[\x00-\x1F\x7F-\x9F]/g, '');

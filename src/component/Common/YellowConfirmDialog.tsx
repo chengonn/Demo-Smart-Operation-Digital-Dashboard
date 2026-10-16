@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React from 'react';
 import { Snackbar, Alert, Button, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -57,7 +58,7 @@ const YellowConfirmDialog: React.FC<ConfirmationDialogProps> = ({
         </IconButton>
 
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
-          <span style={{ verticalAlign: 'middle', fontSize: '1.2rem' }}>{message}</span>
+          <span style={{ verticalAlign: 'middle', fontSize: '1.2rem' }}>{t(message)}</span>
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -76,7 +77,8 @@ const YellowConfirmDialog: React.FC<ConfirmationDialogProps> = ({
               padding: '8px 16px',
             }}
           >
-            取消
+
+            {t("取消")}
           </Button>
           <Button
             onClick={onConfirm}
@@ -93,7 +95,8 @@ const YellowConfirmDialog: React.FC<ConfirmationDialogProps> = ({
               padding: '8px 16px',
             }}
           >
-            確認
+
+            {t("確認")}
           </Button>
         </div>
       </Alert>

@@ -2,3 +2,7 @@
 .demo-banner button{flex-shrink:0;border:1px solid #c7a946;border-radius:6px;background:#fff;padding:5px 12px;color:#51411d;cursor:pointer}
 .demo-banner button:focus-visible{outline:2px solid #3163b3;outline-offset:2px}
 @media(max-width:600px){.demo-banner{padding:8px 12px;align-items:flex-start;font-size:12px}.demo-banner button{padding:5px 8px}}
+.demo-actions{display:flex;align-items:center;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.language-switch{display:flex;gap:2px}
+.language-switch button[aria-pressed="true"]{background:#51411d;color:white;border-color:#51411d}
+@media(max-width:800px){.demo-banner{flex-wrap:wrap}.demo-actions{margin-left:auto}}

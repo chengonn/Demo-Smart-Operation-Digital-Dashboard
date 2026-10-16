@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import UserPickerDialog from './memberControlUserPicker';
@@ -67,7 +68,8 @@ const ParentComponent: React.FC = () => {
         onDeleteGroup={handleDeleteGroup}
       />
       <Button variant="contained" color="primary" onClick={handleOpenDialog}>
-        新增成員
+
+        {t("新增成員")}
       </Button>
       <UserPickerDialog
         open={dialogOpen}

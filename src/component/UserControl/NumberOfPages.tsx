@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React from 'react';
 import { Box, IconButton, Button, TablePagination } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
@@ -44,7 +45,7 @@ const NumberOfPages: React.FC<NumberOfPagesProps> = ({ count, page, rowsPerPage,
       {pageNumbers.map((pageNumber, index) =>
         typeof pageNumber === 'string' ? (
           <Button key={index} disabled>
-            {pageNumber}
+            {t(pageNumber)}
           </Button>
         ) : (
           <IconButton
@@ -55,7 +56,7 @@ const NumberOfPages: React.FC<NumberOfPagesProps> = ({ count, page, rowsPerPage,
               fontSize: '1rem'
             }}
           >
-            {pageNumber + 1}
+            {t(pageNumber + 1)}
           </IconButton>
         )
       )}

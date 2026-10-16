@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -12,13 +13,13 @@ const NotFound: React.FC = () => {
       <div className={styles.stars2}></div>
       <div className={styles.stars3}></div>
       <div className={styles.title}>
-        <img src={LOGO} className={styles.LOGO} />
+        <img src={t(LOGO)} className={styles.LOGO} />
         <br />
         <span className={styles.theBig}>404</span>
-        <span className={styles.theSmall}>抱歉 我們找不到您要的頁面</span>
+        <span className={styles.theSmall}>{t("抱歉 我們找不到您要的頁面")}</span>
         <div className={styles.BackHomeButton}>
           <Link to="/home" className={styles.BackHomeButtonLink}>
-            <div className={styles.BackHomeText}>回首頁</div>
+            <div className={styles.BackHomeText}>{t("回首頁")}</div>
           </Link>
         </div>
       </div>
@@ -28,4 +29,3 @@ const NotFound: React.FC = () => {
 };
 
 export default NotFound;
-

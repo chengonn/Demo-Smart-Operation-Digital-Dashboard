@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 //src\component\ChartAdmin\ViewChartForm.tsx
 import React, { useEffect, useState }  from 'react';
 import styles from './ChartAdminForm.module.css';
@@ -9,7 +10,7 @@ interface ViewChartFormProps {
   chartName: string;
   chartCodeFile: string;
   chartImage: string;
-  showcaseImage: string;  
+  showcaseImage: string;
   onClose: () => void;
 }
 
@@ -39,17 +40,17 @@ const ViewChartForm: React.FC<ViewChartFormProps> = ({ chartId,chartName, chartC
 
     fetchChartData();
   }, [chartId]);
-  
+
   return (
     <div>
       <div className={styles.formOverlay} onClick={onClose}></div>
       <div className={styles.checkFormContent}>
-        <h2>查看圖表</h2>
+        <h2>{t("查看圖表")}</h2>
         <form>
           <div className={styles.newKPIlabelGroup}>
-            <label htmlFor='newKpiName'>圖表名稱</label>
+            <label htmlFor='newKpiName'>{t("圖表名稱")}</label>
             <input
-              placeholder='圖表名稱'
+              placeholder={t("圖表名稱")}
               id='newKpiName'
               type="text"
               value={chartName}
@@ -63,16 +64,17 @@ const ViewChartForm: React.FC<ViewChartFormProps> = ({ chartId,chartName, chartC
               <p
                 className={styles.newCodeFile}
               >
-                圖表程式碼 {chartCodeFile}
+
+                {t("圖表程式碼")} {t(chartCodeFile)}
               </p>
             </Stack>
           </div>
 
           <div className={styles.newKpiImgGroup}>
-            <img src={showcaseImage} className={styles.viewChartImg} alt='示意圖缺失'></img>
+            <img src={t(showcaseImage)} className={styles.viewChartImg} alt={t("示意圖缺失")}></img>
           </div>
           <div className={styles.newKPIbuttonGroup}>
-            <button type="button" onClick={onClose} className={styles.cancel}>關閉</button>
+            <button type="button" onClick={onClose} className={styles.cancel}>{t("關閉")}</button>
           </div>
         </form>
       </div>

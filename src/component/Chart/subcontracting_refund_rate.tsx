@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
@@ -82,7 +83,7 @@ const SubcontractingRefundRateChart: React.FC<SubcontractingRefundRateProps> = (
   }, [chartId]);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (error) return <div>{t(error)}</div>;
   if (!chartData) return <div>No data available</div>;
 
   const options = {
@@ -111,7 +112,7 @@ const SubcontractingRefundRateChart: React.FC<SubcontractingRefundRateProps> = (
 
   return (
     <div className={styles.chartContainer}>
-      <div className={styles.chartHeader}>委外加工退貨率</div>
+      <div className={styles.chartHeader}>{t("委外加工退貨率")}</div>
       <Pie data={chartData} options={options} />
     </div>
   );

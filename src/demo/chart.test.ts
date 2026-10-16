@@ -1,5 +1,16 @@
 /// <reference types="jest" />
 import { chartHTML, chartComposition } from './chart';
+import { setLanguage } from './i18n';
+
+const messageHandlers: EventListener[] = [];
+const originalAddEventListener = window.addEventListener.bind(window);
+beforeEach(() => {
+  setLanguage('zh');
+  jest.spyOn(window, 'addEventListener').mockImplementation((type: string, listener: any, options?: any) => {
+    if (type === 'message') messageHandlers.push(listener);
+    originalAddEventListener(type, listener, options);
+  });
+});
 
 function renderChart(id: number) {
   document.body.innerHTML = chartHTML('測試指標', id);
@@ -14,7 +25,11 @@ function select(selector: string, value: string) {
   control.dispatchEvent(new Event('change'));
 }
 
-afterEach(() => { document.body.innerHTML = ''; });
+afterEach(() => {
+  messageHandlers.splice(0).forEach(handler => window.removeEventListener('message', handler));
+  jest.restoreAllMocks();
+  document.body.innerHTML = '';
+});
 
 test('the overview has distinct bar, line and pie charts on first render', () => {
   renderChart(10);
@@ -62,4 +77,21 @@ test('chart titles cannot inject executable HTML into the iframe', () => {
   const html = chartHTML('<img src=x onerror="alert(1)">', 10);
   document.body.innerHTML = html;
   expect(document.querySelector('img')).toBeNull();
+});
+
+test('live language changes translate charts and retain their selected type and period', () => {
+  renderChart(14);
+  select('#months', '3');
+  window.dispatchEvent(new MessageEvent('message', { source: window, data: { type: 'demo-language', language: 'en' } }));
+  expect(document.querySelector('.caption')!.textContent).toBe('Cost variance breakdown · Oct — Dec');
+  expect(document.querySelector('.legend')!.textContent).toContain('Materials');
+  expect((document.querySelector('#kind') as HTMLSelectElement).value).toBe('pie');
+  expect((document.querySelector('#months') as HTMLSelectElement).value).toBe('3');
+  expect(document.querySelector('#kind')!.getAttribute('aria-label')).toBe('Chart type');
+  select('#kind', 'bar');
+  expect(document.querySelectorAll('rect')).toHaveLength(3);
+  expect(document.querySelector('svg')!.textContent).toContain('Oct');
+  window.dispatchEvent(new MessageEvent('message', { source: window, data: { type: 'demo-language', language: 'zh' } }));
+  expect(document.querySelector('.caption')!.textContent).toContain('10月 — 12月');
+  expect((document.querySelector('#kind') as HTMLSelectElement).value).toBe('bar');
 });

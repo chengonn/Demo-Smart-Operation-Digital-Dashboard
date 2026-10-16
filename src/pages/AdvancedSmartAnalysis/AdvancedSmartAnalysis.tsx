@@ -1,3 +1,4 @@
+import { t } from "../../demo/i18n";
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SmartHTML from '../../component/AdvancedSmartAnalysis/SmartHTML';
@@ -119,9 +120,9 @@ const AdvancedSmartAnalysis: React.FC = () => {
           >
             <button className={styles.floatingButton} onClick={toggleContent}>
               {!showDialogue ? (
-                <img src={chatIcon} alt="對話" />
+                <img src={t(chatIcon)} alt={t("對話")} />
               ) : (
-                <img src={analyticsIcon} alt="分析" />
+                <img src={t(analyticsIcon)} alt={t("分析")} />
               )}
             </button>
           </Draggable>

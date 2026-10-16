@@ -1,3 +1,4 @@
+import { t } from "../demo/i18n";
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useUserContext } from '../context/UserContext';
@@ -18,7 +19,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ allowedRoles, children }) =
     return <Navigate to="/login" />;
   }
 
-  return <>{children}</>;
+  return <>{t(children)}</>;
 };
 
 export default PrivateRoute;
