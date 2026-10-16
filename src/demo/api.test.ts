@@ -87,3 +87,18 @@ test('responses cannot mutate the store and unsupported operations fail visibly'
   expect(request('/dashboard').data[0].name).toBe('營運總覽');
   expect(() => request('/unknown')).toThrow('尚未支援');
 });
+
+test('previously saved demos receive new chart renderers without losing edits', () => {
+  const created = request('/dashboard', 'POST', { name: '保留我的儀表板' }).data;
+  const { STORAGE_KEY } = require('./api');
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)!);
+  saved.charts[0].chartHTML = 'old-line-chart';
+  saved.charts[0].chartImage = 'old-line-chart';
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+  jest.resetModules();
+  request = require('./api').demoRequest;
+  expect(request(`/dashboard/${created.id}`).data.name).toBe('保留我的儀表板');
+  const html = decodeURIComponent(request('/chart/10').data.chartHTML);
+  expect(html).toContain('aria-label="圖表類型"');
+  expect(html).not.toContain('old-line-chart');
+});

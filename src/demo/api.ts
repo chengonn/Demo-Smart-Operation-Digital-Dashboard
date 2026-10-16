@@ -16,7 +16,7 @@ interface Store {
 }
 
 function seed(): Store {
-  const charts = names.map((name, i) => ({ id: i + 10, name, chartImage: chartURL(name, i + 10), chartHTML: chartURL(name, i + 10), showcaseImage: chartPreview(name), observable: true, canAssign: true, canExport: true, ...audit }));
+  const charts = names.map((name, i) => ({ id: i + 10, name, chartImage: chartURL(name, i + 10), chartHTML: chartURL(name, i + 10), showcaseImage: chartPreview(name, i + 10), observable: true, canAssign: true, canExport: true, ...audit }));
   const users = [demoUser, ...['陳怡安', '林柏宇', '王佳蓉', '許承恩'].map((name, i) => ({ ...demoUser, id: String(i + 2), userId: String(i + 2), name, userName: name, email: `member${i + 2}@example.com`, gmail: `member${i + 2}@example.com`, identity: i === 3 ? 'NO_PERMISSION' : 'USER', departmentId: i % 2 ? '2' : '1', departmentName: i % 2 ? '生產管理部' : '營運管理部', department: i % 2 ? '生產管理部' : '營運管理部', position: '專員', jobNumber: `DEMO00${i + 2}` }))];
   return {
     users, charts,
@@ -32,7 +32,12 @@ function seed(): Store {
 }
 
 function load(): Store {
-  try { const stored = localStorage.getItem(STORAGE_KEY); if (stored) { const parsed = JSON.parse(stored); if (Array.isArray(parsed.charts) && Array.isArray(parsed.users)) return parsed; } } catch { /* Reset malformed or unavailable browser storage. */ }
+  try { const stored = localStorage.getItem(STORAGE_KEY); if (stored) { const parsed = JSON.parse(stored); if (Array.isArray(parsed.charts) && Array.isArray(parsed.users)) {
+        // Refresh generated assets without discarding saved dashboards or edits.
+        parsed.charts = parsed.charts.map((chart: Row) => ({ ...chart, chartImage: chartURL(chart.name, Number(chart.id)), chartHTML: chartURL(chart.name, Number(chart.id)), showcaseImage: chartPreview(chart.name, Number(chart.id)) }));
+        parsed.mails = parsed.mails.map((mail: Row) => ({ ...mail, showcaseImage: parsed.charts.find((chart: Row) => chart.id === mail.chartId)?.showcaseImage }));
+        return parsed;
+      } } } catch { /* Reset malformed or unavailable browser storage. */ }
   return seed();
 }
 let store = load();
@@ -75,7 +80,7 @@ export function demoRequest(rawURL: string, method = 'GET', body: any = {}, extr
     result = ok(chart);
   } else if (path === '/chart' && verb === 'POST') {
     const chartId = nextId(store.charts), name = String(data.name || '新示範圖表');
-    const chart = { id: chartId, name, chartImage: chartURL(name, chartId), chartHTML: chartURL(name, chartId), showcaseImage: chartPreview(name), canAssign: true, canExport: true, observable: true, ...audit };
+    const chart = { id: chartId, name, chartImage: chartURL(name, chartId), chartHTML: chartURL(name, chartId), showcaseImage: chartPreview(name, chartId), canAssign: true, canExport: true, observable: true, ...audit };
     store.charts.push(chart); result = ok(chart);
   } else if (path === '/dashboard' || path.startsWith('/dashboard/')) {
     if (verb === 'POST') { const dashboardId = nextId(store.dashboards); const row = { ...data, id: String(dashboardId), dashboardId, chartIds: [] }; store.dashboards.push(row); result = ok(row); }
