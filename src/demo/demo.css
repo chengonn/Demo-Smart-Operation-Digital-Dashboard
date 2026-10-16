@@ -1,4 +1,4 @@
-.demo-banner{position:relative;z-index:1100;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 20px;background:#fff5d3;border-bottom:1px solid #ecd79c;color:#51411d;font:13px/1.5 system-ui}
+.demo-banner{position:relative;z-index:2200;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 20px;background:#fff5d3;border-bottom:1px solid #ecd79c;color:#51411d;font:13px/1.5 system-ui}
 .demo-banner button{flex-shrink:0;border:1px solid #c7a946;border-radius:6px;background:#fff;padding:5px 12px;color:#51411d;cursor:pointer}
 .demo-banner button:focus-visible{outline:2px solid #3163b3;outline-offset:2px}
 @media(max-width:600px){.demo-banner{padding:8px 12px;align-items:flex-start;font-size:12px}.demo-banner button{padding:5px 8px}}
@@ -6,3 +6,6 @@
 .language-switch{display:flex;gap:2px}
 .language-switch button[aria-pressed="true"]{background:#51411d;color:white;border-color:#51411d}
 @media(max-width:800px){.demo-banner{flex-wrap:wrap}.demo-actions{margin-left:auto}}
+/* Bound legacy overlay z-index values so the language controls remain reachable. */
+.App{isolation:isolate}
+#portal-root{position:relative;z-index:2000}

@@ -17,6 +17,7 @@ export function setLanguage(next: Language) {
 // Canonical Chinese values stay in storage and filters; only displayed text changes.
 export const englishMessages: Record<string, string> = Object.fromEntries(String.raw`
 作品展示版|Portfolio demo
+assignment.action|Assign
 展示版說明|About this demo
 · 全站使用虛構示範資料，操作僅保存在此瀏覽器；郵件與 AI 回覆為模擬。|· All data is fictional. Changes stay in this browser; messages and AI replies are simulated.
 重設示範資料|Reset demo data
@@ -392,7 +393,7 @@ Click to close sidebar|Close sidebar
 }));
 
 export function translateText(text: string, target: Language = language): string {
-  if (target === 'zh') return text;
+  if (target === 'zh') return text === 'assignment.action' ? '交辦' : text;
   if (englishMessages[text]) return englishMessages[text];
   const trimmed = text.trim();
   if (englishMessages[trimmed]) return text.replace(trimmed, englishMessages[trimmed]);

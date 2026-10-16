@@ -270,7 +270,7 @@ const ChartWithDropdown: React.FC<ChartWithDropdownProps> = ({ children, exportD
 
                <button onClick={handleExportClick}>{t("匯出")}</button>
 
-                <button onClick={handleDelegateClick}>{t("交辦")}</button>
+                <button onClick={handleDelegateClick}>{t('assignment.action')}</button>
 
                 <button className={styles.lastButton} onClick={() => handleAdvancedAnalysisWrapper()}>{t("進階分析")}</button>
 

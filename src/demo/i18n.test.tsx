@@ -23,6 +23,8 @@ test('language is persisted and changing it leaves custom content intact', () =>
 });
 
 test('dynamic messages and SVG previews translate without altering canonical data', () => {
+  expect(translateText('assignment.action', 'zh')).toBe('交辦');
+  expect(translateText('assignment.action', 'en')).toBe('Assign');
   expect(translateText('擁有權限者：展示管理員, 陳怡安', 'en')).toBe('Authorized: Demo administrator, Yi-An Chen');
   expect(translateText('確定要移除 陳怡安 嗎？', 'en')).toBe('Remove Yi-An Chen?');
   expect(translateText('2 陳怡安', 'en')).toBe('2 Yi-An Chen');
