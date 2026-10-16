@@ -9,3 +9,4 @@
 /* Bound legacy overlay z-index values so the language controls remain reachable. */
 .App{isolation:isolate}
 #portal-root{position:relative;z-index:2000}
+@media(max-width:1024px){.App [class*="_openbutton"]{top:var(--demo-banner-height,52px)}}

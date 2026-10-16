@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import { resetDemo } from './api';
 import './demo.css';
 import { getLanguage, setLanguage, t } from './i18n';
 
 export default function DemoBanner() {
-  return <aside className="demo-banner" aria-label={t('展示版說明')}>
+  const banner = useRef<HTMLElement>(null);
+  useLayoutEffect(() => {
+    const updateHeight = () => document.documentElement.style.setProperty('--demo-banner-height', `${banner.current?.getBoundingClientRect().height || 52}px`);
+    updateHeight();
+    const observer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(updateHeight) : null;
+    if (banner.current) observer?.observe(banner.current);
+    window.addEventListener('resize', updateHeight);
+    return () => { observer?.disconnect(); window.removeEventListener('resize', updateHeight); document.documentElement.style.removeProperty('--demo-banner-height'); };
+  }, []);
+  return <aside ref={banner} className="demo-banner" aria-label={t('展示版說明')}>
     <span><strong>{t('作品展示版')}</strong> {t('· 全站使用虛構示範資料，操作僅保存在此瀏覽器；郵件與 AI 回覆為模擬。')}</span>
     <div className="demo-actions">
       <div className="language-switch" role="group" aria-label="語言 / Language">
